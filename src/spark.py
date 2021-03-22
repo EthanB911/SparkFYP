@@ -1,4 +1,4 @@
-from pyspark.sql import SparkSession 
+from pyspark.sql import SparkSession
 from pyspark import SparkContext, SparkConf
 import matplotlib.pyplot as plt 
 
@@ -12,14 +12,16 @@ import matplotlib.pyplot as plt
 #     .getOrCreate()
 def get_spark_session():
     spark = SparkSession.builder \
-        .master("local") \
+        .master("local[*]") \
         .appName("Word Count") \
         .config("spark.executor.memory", "1000m") \
         .config("spark.executor.instances", "4") \
         .config("spark.executor.cores", "1") \
-        .config("spark.ui.port", "4041") \
         .getOrCreate()
     return spark
+    # conf = SparkConf().setAppName('hello').setMaster('local[*]').setSparkHome('/opt/spark/')
+    # sc = SparkContext(conf=conf)
+    # return sc
 
 
 
