@@ -11,10 +11,20 @@ from graphframes import *
 import networkx as nx
 import matplotlib.pyplot as plt
 
-def PlotGraph(edges):
-    gp = nx.from_pandas_edgelist(edges.toPandas(), 'src', 'dst')
+
+# list to dictionary
+
+def Convert(lst):
+    res_dct = {lst[i]: lst[i + 1] for i in range(0, len(lst), 2)}
+    return res_dct
+
+
+
+def PlotGraph( edges):
+    gp = nx.from_pandas_edgelist(edges.toPandas(), 'src', 'dst', create_using=nx.MultiGraph())
     nx.draw(gp, with_labels=True)
     plt.show()
+
 
 
 def fasta_to_trie():
@@ -56,18 +66,74 @@ def spark_graph():
         ("d", "a", "friend"),
         ("a", "e", "friend")
     ], ["src", "dst", "relationship"])
-    print(edges.show())
+
     g = GraphFrame(vertices, edges)
     ## Take a look at the DataFrames
     g.vertices.show()
     g.edges.show()
     ## Check the number of edges of each vertex
     g.degrees.show()
-    PlotGraph(edges)
+    return edges, g
 
-spark_graph()
+# edges, graph = spark_graph()
+# PlotGraph(edges)
+
+root = TrieNode("names")
+add(root, "ethan")
+add(root, "brady")
+add(root, "ethanol")
+add(root, "ethenial")
+spark = get_spark_session()
+sqlContext = SQLContext(spark.sparkContext)
+verts = []
+
+edges = []
 
 
+
+
+
+def convert_Trie_To_Table(trie, id):
+    global generatedId
+    generatedId = id
+    verts.append((id, trie.char))
+
+    #root .for each
+    for child in trie.children:
+        edges.append((id, generatedId + 1, "word"))
+        addrowRecord(child, generatedId + 1)
+        generatedId += 1
+
+
+
+
+def addrowRecord(node, id):
+    global generatedId
+    generatedId = id
+    verts.append((id, node.char))
+
+    if(len(node.children) != 0):
+        for child in node.children:
+            generatedId += 1
+            edges.append((id, generatedId + 1, "word"))
+            generatedId = addrowRecord(child, generatedId + 1)
+    if(node.word_finished == True):
+        generatedId += 1
+        verts.append((generatedId + 1, '$'))
+
+        edges.append((id, generatedId + 1, "word"))
+    return generatedId
+
+
+convert_Trie_To_Table(root, 0)
+vertices = sqlContext.createDataFrame(verts, ["id", "name"])
+vertices.show()
+edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
+edgesspark.show()
+
+print(verts)
+print(edges)
+PlotGraph(edgesspark)
 connection = mysql.connector.connect(
   host="localhost",
   user="root",
