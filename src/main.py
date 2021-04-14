@@ -4,7 +4,8 @@ from trie import add, TrieNode, find_matching_prefix
 from spark import get_spark_session
 from pyspark.sql.types import Row, StructType, StructField, StringType
 from pyspark.sql import SQLContext
-from Bio import SeqIO
+from Bio import SeqIO, AlignIO
+from Bio.Align import AlignInfo
 from functools import reduce
 from pyspark.sql.functions import col, lit, when
 from graphframes import *
@@ -20,9 +21,13 @@ def Convert(lst):
 
 
 
-def PlotGraph( edges):
-    gp = nx.from_pandas_edgelist(edges.toPandas(), 'src', 'dst', create_using=nx.MultiGraph())
-    nx.draw(gp, with_labels=True)
+def PlotGraph(edges, vertices):
+    gp = nx.from_pandas_edgelist(edges.toPandas(), 'src', 'dst', create_using=nx.OrderedMultiDiGraph())
+    new_vertices = Convert(vertices)
+    print(new_vertices)
+    G= nx.relabel_nodes(gp, new_vertices, copy=False)
+    G.remove_edges_from(nx.selfloop_edges(G))
+    nx.draw(G, with_labels=True)
     plt.show()
 
 
@@ -78,17 +83,17 @@ def spark_graph():
 # edges, graph = spark_graph()
 # PlotGraph(edges)
 
-root = TrieNode("names")
-add(root, "ethan")
-add(root, "brady")
-add(root, "ethanol")
-add(root, "ethenial")
-spark = get_spark_session()
-sqlContext = SQLContext(spark.sparkContext)
-verts = []
 
-edges = []
 
+# file = SeqIO.parse("/Users/ethan/Downloads/1.10.1870.10/full_alignments/1.10.1870.10-FF-000001.faa", "fasta")
+
+file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full_alignments/1.10.1870.10-FF-000002.faa", "fasta")
+for line in file:
+    print(line)
+summary_align = AlignInfo.SummaryInfo(file)
+
+print(summary_align.gap_consensus())
+print(summary_align.dumb_consensus( threshold=0,ambiguous='-', require_multiple=1))
 
 
 
@@ -97,7 +102,8 @@ def convert_Trie_To_Table(trie, id):
     global generatedId
     generatedId = id
     verts.append((id, trie.char))
-
+    ver.append(id)
+    ver.append(trie.char)
     #root .for each
     for child in trie.children:
         edges.append((id, generatedId + 1, "word"))
@@ -111,7 +117,8 @@ def addrowRecord(node, id):
     global generatedId
     generatedId = id
     verts.append((id, node.char))
-
+    ver.append(id)
+    ver.append(node.char)
     if(len(node.children) != 0):
         for child in node.children:
             generatedId += 1
@@ -120,20 +127,34 @@ def addrowRecord(node, id):
     if(node.word_finished == True):
         generatedId += 1
         verts.append((generatedId + 1, '$'))
-
+        ver.append(generatedId + 1)
+        ver.append('$')
         edges.append((id, generatedId + 1, "word"))
     return generatedId
 
+#Example -----
+verts = []
+ver = []
+edges = []
+# root = TrieNode("names")
+# add(root, "ethan")
+# add(root, "brady")
+# add(root, "ethanol")
+# add(root, "ethenial")
+# spark = get_spark_session()
+# sqlContext = SQLContext(spark.sparkContext)
+#
+# convert_Trie_To_Table(root, 0)
+# vertices = sqlContext.createDataFrame(verts, ["id", "name"])
+# vertices.show()
+# edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
+# edgesspark.show()
+#
+# print(verts)
+# print(edges)
+# PlotGraph(edgesspark, ver)
 
-convert_Trie_To_Table(root, 0)
-vertices = sqlContext.createDataFrame(verts, ["id", "name"])
-vertices.show()
-edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
-edgesspark.show()
 
-print(verts)
-print(edges)
-PlotGraph(edgesspark)
 connection = mysql.connector.connect(
   host="localhost",
   user="root",
