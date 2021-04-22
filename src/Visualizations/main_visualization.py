@@ -13,4 +13,4 @@ def PlotGraph(edges, vertices):
     G= nx.relabel_nodes(gp, new_vertices, copy=False)
     G.remove_edges_from(nx.selfloop_edges(G))
     nx.draw(G, with_labels=True)
-    plt.show()
+    plt.show()c

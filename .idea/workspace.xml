@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Matrices/blosum62.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Matrices/get_replacement_dict.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Visualizations/main_visualization.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Searching/search1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Spark.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Spark.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Visualizations/main_visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Visualizations/main_visualization.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/spark.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/spark.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +68,8 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PYSPARK_DRIVER_PYTHON" value="/usr/local/bin/python3.9" />
+        <env name="PYSPARK_PYTHON" value="/usr/local/bin/python3.9" />
       </envs>
       <option name="SDK_HOME" value="/usr/local/bin/python3.9" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
@@ -125,14 +129,39 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="search1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Spark" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="PYSPARK_DRIVER_PYTHON" value="/usr/local/bin/python3.9" />
+        <env name="PYSPARK_PYTHON" value="/usr/local/bin/python3.9" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/bin/python3.9" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Searching" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Searching/search1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.consensus_Trie" />
-      <item itemvalue="Python.main" />
       <item itemvalue="Python.blums62" />
+      <item itemvalue="Python.consensus_Trie" />
       <item itemvalue="Python.get_replacement_dict" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.search1" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.search1" />
         <item itemvalue="Python.get_replacement_dict" />
         <item itemvalue="Python.blums62" />
       </list>
@@ -161,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616521598155</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added subst matrix and add all substitutions of the consensus to trie.">
+      <created>1618430081326</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1618430081326</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,7 +215,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added graphframes and visualization" />
     <MESSAGE value="Visualization of graphframe" />
-    <option name="LAST_COMMIT_MESSAGE" value="Visualization of graphframe" />
+    <MESSAGE value="Added subst matrix and add all substitutions of the consensus to trie." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added subst matrix and add all substitutions of the consensus to trie." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

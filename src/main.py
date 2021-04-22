@@ -106,7 +106,7 @@ def convert_Trie_To_Table(trie, id):
     ver.append(trie.char)
     #root .for each
     for child in trie.children:
-        edges.append((id, generatedId + 1, "word"))
+        edges.append((id, generatedId + 1, "000002"))
         addrowRecord(child, generatedId + 1)
         generatedId += 1
 
@@ -122,14 +122,14 @@ def addrowRecord(node, id):
     if(len(node.children) != 0):
         for child in node.children:
             generatedId += 1
-            edges.append((id, generatedId + 1, "word"))
+            edges.append((id, generatedId + 1, "000002"))
             generatedId = addrowRecord(child, generatedId + 1)
     if(node.word_finished == True):
         generatedId += 1
         verts.append((generatedId + 1, '$'))
         ver.append(generatedId + 1)
         ver.append('$')
-        edges.append((id, generatedId + 1, "word"))
+        edges.append((id, generatedId + 1, "1.10.1870.10"))
     return generatedId
 
 #Example -----
@@ -145,7 +145,7 @@ edges = []
 # sqlContext = SQLContext(spark.sparkContext)
 #
 # convert_Trie_To_Table(root, 0)
-# vertices = sqlContext.createDataFrame(verts, ["id", "name"])
+# vertices = sqlContext.createDataFrame(verts, ["id", "name", "superfamily"])
 # vertices.show()
 # edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
 # edgesspark.show()

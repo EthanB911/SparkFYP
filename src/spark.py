@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark import SparkContext, SparkConf
-import matplotlib.pyplot as plt 
+
 
 
 # sc = SparkContext(master="spark://localhost:7077", appName="test")
