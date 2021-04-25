@@ -114,6 +114,26 @@ def convert_Trie_To_Table(trie, id):
 
 trie = all_fasta_alignments_to_trie()
 g = trie_to_graphframe(trie)
+#search algorithm?
+
+list_of_superfamilies = []
+search_term = ""
+current_search_term = ""
+matching_motif_patterns = []
+score_dictionary = {}
+
+
+#steps
+
+#1. Arrive at superfamily
+
+#2. Get first character and check if next node matches
+#When checking for next node always check all children, therefore all nodes where src matches current node, to see all children
+
+#3. If found set this node as current node and move to next character in string
+#4. If not found i. move to next string in search_term, therefore now attempting to search for a new 'motif'
+# ii) Shall I revesit new path in string on continue along current traversed path. This will completely eliminate the other paths in the sub trie of the super family.
+
 
 
 

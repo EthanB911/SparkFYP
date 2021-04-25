@@ -36,7 +36,7 @@ def spark_graph():
 
     print("motifs")
     # Search for pairs of vertices with edges in both directions between them.
-    motifs = graph.find("(a)-[e]->(d)")
+    motifs = graph.find("(a)-[e]->(Bed)")
     motifs.show()
     # whats this ?
     # result = graph.connectedComponents()
