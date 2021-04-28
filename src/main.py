@@ -78,10 +78,10 @@ def spark_graph():
     g.edges.show()
     ## Check the number of edges of each vertex
     g.degrees.show()
-    return edges, g
+    return edges, g, vertices
 
-# edges, graph = spark_graph()
-# PlotGraph(edges)
+edges, graph, verts = spark_graph()
+PlotGraph(edges, verts)
 
 
 

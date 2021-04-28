@@ -117,8 +117,8 @@ g = trie_to_graphframe(trie)
 #search algorithm?
 
 list_of_superfamilies = []
-search_term = ""
-current_search_term = ""
+search_term = "ethan"
+current_search_term = "than"
 matching_motif_patterns = []
 score_dictionary = {}
 
@@ -132,7 +132,8 @@ score_dictionary = {}
 
 #3. If found set this node as current node and move to next character in string
 #4. If not found i. move to next string in search_term, therefore now attempting to search for a new 'motif'
-# ii) Shall I revesit new path in string on continue along current traversed path. This will completely eliminate the other paths in the sub trie of the super family.
+# ii) Shall I revesit new path in string or continue along current traversed path. This will completely eliminate the other paths in the sub trie of the super family.
+
 
 
 

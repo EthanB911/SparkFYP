@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Searching/search1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Searching/search1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Visualizations/main_visualization.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Visualizations/main_visualization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +37,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.search1">
+  <component name="RunManager" selected="Python.suffix_trie">
     <configuration name="blums62" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spark" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -147,15 +149,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="suffix_trie" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Spark" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/Tries" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/Tries/suffix_trie.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.consensus_Trie" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.blums62" />
       <item itemvalue="Python.get_replacement_dict" />
       <item itemvalue="Python.search1" />
+      <item itemvalue="Python.suffix_trie" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.suffix_trie" />
         <item itemvalue="Python.search1" />
         <item itemvalue="Python.get_replacement_dict" />
         <item itemvalue="Python.blums62" />
@@ -199,7 +224,14 @@
       <option name="project" value="LOCAL" />
       <updated>1619099241610</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Commenting process for searching">
+      <created>1619363148027</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1619363148027</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -219,7 +251,8 @@
     <MESSAGE value="Visualization of graphframe" />
     <MESSAGE value="Added subst matrix and add all substitutions of the consensus to trie." />
     <MESSAGE value="Experimenting with searching and filtering dataframes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Experimenting with searching and filtering dataframes." />
+    <MESSAGE value="Commenting process for searching" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commenting process for searching" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
