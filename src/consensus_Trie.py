@@ -94,6 +94,21 @@ g = verts_edges_to_graphframe(vertices, edges)
 g.vertices.show()
 g.edges.show()
 
+# paths = g.bfs("name = 'root'","name = '$'")
+# paths.show()
+rt = g.vertices.filter("name='root'").select("id").collect()[0]["id"]
+print(rt)
+
+motif = g.find("(x)-[e1]->(x1)")\
+        .filter("x.name='root'")\
+        .filter("x1.name='x'")\
+        .select('e1.src', 'e1.dst')
+motif.show()
+
+# edges = g.edges.filter("src="+str(rt)).show()
+
+
+
 
 
 # trie = all_fasta_alignments_to_trie()
