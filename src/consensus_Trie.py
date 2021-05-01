@@ -10,7 +10,8 @@ from Bio.Align import AlignInfo
 import os
 from graphframes import *
 
-
+import os
+print(os.__file__)
 
 def fasta_to_trie():
     file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full_alignments/1.10.1870.10-FF-000002.faa", "fasta")
@@ -84,12 +85,14 @@ def verts_edges_to_graphframe(v, e):
     edgs = sqlContext.createDataFrame(e, ["src", "dst"])
     return GraphFrame(verts, edgs)
 
-trie = SuffixTree("banana")
-vertices, edges = trie.to_graphframe(0)
+trie = SuffixTree("xabxac")
+trie.add("xabxac")
+
+vertices, edges = trie.proper_to_graphframe(0)
 g = verts_edges_to_graphframe(vertices, edges)
 
-# g = GraphFrame(vertices, edges)
-
+g.vertices.show()
+g.edges.show()
 
 
 

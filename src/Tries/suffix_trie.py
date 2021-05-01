@@ -76,6 +76,7 @@ class SuffixTree:
         print(self.count)
 
     def to_graphframe(self, id):
+        #this method saves a word as a node rather than a letter per node...
         verts = []
         edges = []
         global generatedId
@@ -92,15 +93,15 @@ class SuffixTree:
 
             if len(children) == 0:
                 print("-- ", self.nodes[n].sub, id)
-                verts.append((id, self.nodes[n].sub, "1.10.1870.10"))
+                verts.append((generatedId, self.nodes[n].sub, "1.10.1870.10"))
 
                 self.count += 1
                 return
             print("+-", self.nodes[n].sub, id)
             if self.nodes[n].sub != '':
-                verts.append((id, self.nodes[n].sub, "1.10.1870.10"))
+                verts.append((generatedId, self.nodes[n].sub, "1.10.1870.10"))
             else:
-                verts.append((id, "root", "1.10.1870.10"))
+                verts.append((generatedId, "root", "1.10.1870.10"))
             for c in children[:-1]:
                 print(pre, "+- ", id,  end='')
                 edges.append((id, generatedId + 1))
@@ -115,6 +116,76 @@ class SuffixTree:
         print(verts)
         print(edges)
         return verts, edges
+
+    def proper_to_graphframe(self, id):
+        # this method saves a word as a node rather than a letter per node...
+        verts = []
+        edges = []
+        global generatedId
+        generatedId = id
+        self.count = 0
+        if len(self.nodes) == 0:
+            print("<empty>")
+            return
+
+        def f(n, pre, id, parent):
+            global generatedId
+            generatedId = id
+            children = self.nodes[n].ch
+
+            if len(children) == 0:
+                print("-- ", self.nodes[n].sub, id)
+
+                if(len(self.nodes[n].sub) > 1):
+                    id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, "1.10.1870.10" )
+                    generatedId = id
+                else:
+                    verts.append((generatedId, self.nodes[n].sub, "1.10.1870.10"))
+
+                self.count += 1
+                return
+            print("+-", self.nodes[n].sub, id)
+            if self.nodes[n].sub != '':
+                if(len(self.nodes[n].sub) > 1):
+                    id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, "1.10.1870.10" )
+                    generatedId = id
+                else:
+                    verts.append((generatedId, self.nodes[n].sub, "1.10.1870.10"))
+            else:
+                verts.append((generatedId, "root", "1.10.1870.10"))
+
+            for c in children[:-1]:
+                print(pre, "+- ", id, end='')
+                edges.append((id, generatedId + 1))
+                f(c, pre + " | ", generatedId + 1, self.nodes[n].sub)
+
+            print(pre, "+- ", id, end='')
+            edges.append((id, generatedId + 1))
+            f(children[-1], pre + "  ", generatedId + 1, self.nodes[n].sub)
+            return id
+
+        def recursive_word_vertice_add(id, word, superfam):
+            verts.append((id, word[0], superfam))
+
+
+            for letter in word[1:]:
+                # print(letter)
+                id += 1
+                #add letter to array
+                verts.append((id, letter, superfam))
+                edges.append((id-1, id))
+                #increment id
+
+
+            return id
+
+        f(0, "", generatedId, "null")
+        print(self.count)
+        print(verts)
+        print(edges)
+        return verts, edges
+
+
 
 
 
