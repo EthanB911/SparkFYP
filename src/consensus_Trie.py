@@ -2,6 +2,7 @@ from spark import get_spark_session
 from pyspark.sql.types import Row, StructType, StructField, StringType
 from trie import add, TrieNode, find_matching_prefix
 from Matrices.get_replacement_dict import get_replacement_dict
+from Tries.suffix_trie import SuffixTree
 from Bio import SeqIO, AlignIO
 from pyspark.sql import SQLContext
 import re
@@ -64,56 +65,36 @@ def all_fasta_alignments_to_trie():
                     add(root, subst)
 
     return root
-verts = []
-ver = []
-edges = []
-def trie_to_graphframe(root):
+
+# def trie_to_graphframe(root):
+#     spark = get_spark_session()
+#     sqlContext = SQLContext(spark.sparkContext)
+#
+#     convert_Trie_To_Table(root, 0)
+#     vertices = sqlContext.createDataFrame(verts, ["id", "name", "superfamily"])
+#     vertices.show()
+#     edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
+#     graph = GraphFrame(vertices, edgesspark)
+#     return graph
+
+def verts_edges_to_graphframe(v, e):
     spark = get_spark_session()
     sqlContext = SQLContext(spark.sparkContext)
+    verts = sqlContext.createDataFrame(v, ["id", "name", "superfamily"])
+    edgs = sqlContext.createDataFrame(e, ["src", "dst"])
+    return GraphFrame(verts, edgs)
 
-    convert_Trie_To_Table(root, 0)
-    vertices = sqlContext.createDataFrame(verts, ["id", "name", "superfamily"])
-    vertices.show()
-    edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
-    graph = GraphFrame(vertices, edgesspark)
-    return graph
+trie = SuffixTree("banana")
+vertices, edges = trie.to_graphframe(0)
+g = verts_edges_to_graphframe(vertices, edges)
 
-
-
-def addrowRecord(node, id):
-    global generatedId
-    generatedId = id
-    verts.append((id, node.char, "1.10.1870.10"))
-    ver.append(id)
-    ver.append(node.char)
-    if (len(node.children) != 0):
-        for child in node.children:
-            generatedId += 1
-            edges.append((id, generatedId + 1, "000002"))
-            generatedId = addrowRecord(child, generatedId + 1)
-    if (node.word_finished == True):
-        generatedId += 1
-        verts.append((generatedId + 1, '$', "1.10.1870.10"))
-        ver.append(generatedId + 1)
-        ver.append('$')
-        edges.append((id, generatedId + 1, "1.10.1870.10"))
-    return generatedId
-
-def convert_Trie_To_Table(trie, id):
-    global generatedId
-    generatedId = id
-    verts.append((id, trie.char, "1.10.1870.10"))
-    ver.append(id)
-    ver.append(trie.char)
-    # root .for each
-    for child in trie.children:
-        edges.append((id, generatedId + 1, "000002"))
-        addrowRecord(child, generatedId + 1)
-        generatedId += 1
+# g = GraphFrame(vertices, edges)
 
 
-trie = all_fasta_alignments_to_trie()
-g = trie_to_graphframe(trie)
+
+
+# trie = all_fasta_alignments_to_trie()
+# g = trie_to_graphframe(trie)
 #search algorithm?
 
 list_of_superfamilies = []
@@ -125,17 +106,14 @@ score_dictionary = {}
 
 #steps
 
-#1. Arrive at superfamily
-
+#1. Arrive at superfamily using subgraph routine
+#probably a while loop(while word is not null or something
 #2. Get first character and check if next node matches
+#find all occurances where src is the root of the superfamily and dest matches word.
+#for each word check if next word matches until word is finished or word does not match
 #When checking for next node always check all children, therefore all nodes where src matches current node, to see all children
 
-#3. If found set this node as current node and move to next character in string
-#4. If not found i. move to next string in search_term, therefore now attempting to search for a new 'motif'
-# ii) Shall I revesit new path in string or continue along current traversed path. This will completely eliminate the other paths in the sub trie of the super family.
-
-
-
+#Repeat for next character , use some sort of pointer to know which is the next word
 
 
 

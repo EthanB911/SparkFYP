@@ -77,7 +77,6 @@ class SuffixTree:
 
     def to_graphframe(self, id):
         verts = []
-        ver = []
         edges = []
         global generatedId
         generatedId = id
@@ -115,12 +114,15 @@ class SuffixTree:
         print(self.count)
         print(verts)
         print(edges)
+        return verts, edges
 
 
 
-strie = SuffixTree("banana")
-strie.add("banana")
-# strie.add("ethanol")
-# strie.add("ethanols")
-
-strie.to_graphframe(0)
+# strie = SuffixTree("banana")
+# strie.add("banana")
+# # strie.add("ethanol")
+# # strie.add("ethanols")
+#
+# vertices, edges = strie.to_graphframe(0)
+# print(vertices)
+# print(edges)
