@@ -213,6 +213,7 @@ while len(current_search_term) > 0:
         #do checking here
         ss = time.time()
         if(result.count() != 0):
+            print("After count")
             print("--- %s seconds ---" % (time.time() - ss))
             current_matching_term = first
             current_search_term = current_search_term[1:]
@@ -224,11 +225,13 @@ while len(current_search_term) > 0:
         #do checking here
         ss = time.time()
         if(result.count() != 0):
+            print("After count")
             print("--- %s seconds ---" % (time.time() - ss))
             current_matching_term += first
             current_search_term = current_search_term[1:]
             current_node = result.select("dst").collect()[0]["dst"]
         else:
+            print("After count")
             print("--- %s seconds ---" % (time.time() - ss))
             #motif stops here
             matching_motif_patterns.append(current_matching_term)
