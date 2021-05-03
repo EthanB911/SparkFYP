@@ -14,9 +14,10 @@ def get_spark_session():
     spark = SparkSession.builder \
         .master("local[*]") \
         .appName("Word Count") \
+        .enableHiveSupport() \
         .config("spark.executor.memory", "1000m") \
         .config("spark.executor.instances", "4") \
-        .config("spark.executor.cores", "1") \
+        .config("spark.executor.cores", "4") \
         .getOrCreate()
     return spark
     # conf = SparkConf().setAppName('hello').setMaster('local[*]').setSparkHome('/opt/spark/')

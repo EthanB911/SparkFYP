@@ -88,10 +88,28 @@ def verts_edges_to_graphframe(v, e):
 
 trie = SuffixTree("xabxac")
 # trie.add("xabxac")
+
+# trie.add("banana")
+# trie.add("xadina")
+# trie.add("bbababab")
+# trie.add("malcom")
+# trie.add("michael")
+# trie.add("aaiert")
+# trie.add("depbajkd")
+# trie.add("dembabkeumds,k")
+# trie.add("peterporsche")
+# trie.add("ferrarialfaromeo")
+# # trie.add("mercedesprojecgtone")
+# trie.add("bradley")
+# trie.add("wizascooot")
+# trie.add("sheesh")
+# trie.add("jadebriffa")
+# trie.add("jpseph")
+# trie.add("bonello")
+# # trie.add("forceininasauberamggts")
 trie.add("ethan")
 trie.add("ethen")
-trie.add("banana")
-trie.add("xadina")
+
 # trie.add("banana")
 
 vertices, edges = trie.proper_to_graphframe(0)
@@ -105,21 +123,24 @@ g.edges.show()
 # rt = g.vertices.filter("name='root'").select("id").collect()[0]["id"]
 # print(rt)
 
-motif = g.find("(x)-[e1]->(x1)")\
-        .filter("x.name='root'")\
-        .filter("x1.name='n'")\
-        .select('e1.src', 'e1.dst')
-motif.show()
+# motif = g.find("(x)-[e1]->(x1)")\
+#         .filter("x.name='root'")\
+#         .filter("x1.name='n'")\
+#         .select('e1.src', 'e1.dst')
+# motif.show()
+#
+# start_time = time.time()
+# print("Destination")
+#
+# print()
+# print("--- %s seconds ---" % (time.time() - start_time))
+# motif.foreach(lambda row:
+#     print(row['src'])
+#     )
 
-start_time = time.time()
-print("Destination")
+# subg = g.vertices.filter("name='e'")
+# print(subg)
 
-print()
-print("--- %s seconds ---" % (time.time() - start_time))
-motif.foreach(lambda row:
-    print(row['src'])
-    )
-# serch = g.ed
 
 
 # edges = g.edges.filter("src="+str(rt)).show()
@@ -149,6 +170,12 @@ def search_graph_from_id(graph,current,  next):
     print(motif.count())
     return motif
 
+def alternative_search(graph):
+    start_time = time.time()
+
+
+
+    print("--- %s seconds ---" % (time.time() - start_time))
 # search_graph_from_id(g, 0, "d")
 
 # trie = all_fasta_alignments_to_trie()
@@ -167,7 +194,7 @@ print(len(current_matching_term))
 
 #1. Arrive at superfamily using subgraph routine
 #probably a while loop(while word is not null or something
-
+s = time.time()
 current_node = "root"
 while len(current_search_term) > 0:
     print("Current search term: " + current_search_term)
@@ -204,7 +231,7 @@ if(len(current_matching_term) != 0 ):
 
 print("Mathed patterns: ")
 print(matching_motif_patterns)
-
+print("--- %s seconds ---" % (time.time() - s))
 
 #2. Get first character and check if next node matches
 #find all occurances where src is the root of the superfamily and dest matches word.
