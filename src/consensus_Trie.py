@@ -2,6 +2,7 @@ from spark import get_spark_session
 from pyspark.sql.types import Row, StructType, StructField, StringType
 from trie import add, TrieNode, find_matching_prefix
 from Matrices.get_replacement_dict import get_replacement_dict
+import pandas as pd
 from Tries.suffix_trie import SuffixTree
 from Bio import SeqIO, AlignIO
 import time
@@ -89,24 +90,24 @@ def verts_edges_to_graphframe(v, e):
 trie = SuffixTree("xabxac")
 # trie.add("xabxac")
 
-# trie.add("banana")
-# trie.add("xadina")
-# trie.add("bbababab")
-# trie.add("malcom")
-# trie.add("michael")
-# trie.add("aaiert")
-# trie.add("depbajkd")
-# trie.add("dembabkeumds,k")
-# trie.add("peterporsche")
-# trie.add("ferrarialfaromeo")
-# # trie.add("mercedesprojecgtone")
-# trie.add("bradley")
-# trie.add("wizascooot")
-# trie.add("sheesh")
-# trie.add("jadebriffa")
-# trie.add("jpseph")
-# trie.add("bonello")
-# # trie.add("forceininasauberamggts")
+trie.add("banana")
+trie.add("xadina")
+trie.add("bbababab")
+trie.add("malcom")
+trie.add("michael")
+trie.add("aaiert")
+trie.add("depbajkd")
+trie.add("dembabkeumdsk")
+trie.add("peterporsche")
+trie.add("ferrarialfaromeo")
+# trie.add("mercedesprojecgtone")
+trie.add("bradley")
+trie.add("wizascooot")
+trie.add("sheesh")
+trie.add("jadebriffa")
+trie.add("jpseph")
+trie.add("bonello")
+# trie.add("forceininasauberamggts")
 trie.add("ethan")
 trie.add("ethen")
 
@@ -114,9 +115,8 @@ trie.add("ethen")
 
 vertices, edges = trie.proper_to_graphframe(0)
 g = verts_edges_to_graphframe(vertices, edges)
+g.cache()
 
-g.vertices.show()
-g.edges.show()
 
 # paths = g.bfs("name = 'root'","name = '$'")
 # paths.show()
@@ -137,10 +137,21 @@ g.edges.show()
 # motif.foreach(lambda row:
 #     print(row['src'])
 #     )
-
+# t1 = time.time()
 # subg = g.vertices.filter("name='e'")
 # print(subg)
+#
+# print("--- %s seconds ---" % (time.time() - t1))
 
+# motif = g.find("(x)-[e1]->(x1)")\
+#         .filter("x.name='root'")\
+#         .filter("x1.name='e'")\
+#         .select('e1.src', 'e1.dst')
+#
+#
+# t2 = time.time()
+# print(motif.count())
+# print("--- %s seconds ---" % (time.time() - t2))
 
 
 # edges = g.edges.filter("src="+str(rt)).show()
@@ -151,8 +162,7 @@ def search_graph_from_root(graph, next):
         .filter("x.name='root'")\
         .filter("x1.name='" + next+"'") \
         .select('e1.src', 'e1.dst')
-    print(next)
-    motif.show()
+
     print("--- %s seconds ---" % (time.time() - start_time))
     return motif
 
@@ -164,10 +174,8 @@ def search_graph_from_id(graph,current,  next):
         .filter("e1.src=" + str(current))\
         .filter("x1.name='" + next+"'") \
         .select('e1.src', 'e1.dst')
-    print(str(current) + "to " + next)
-    motif.show()
+
     print("--- %s seconds ---" % (time.time() - start_time))
-    print(motif.count())
     return motif
 
 def alternative_search(graph):
@@ -203,7 +211,9 @@ while len(current_search_term) > 0:
     if(len(current_matching_term) == 0):
         result =  search_graph_from_root(g,first)
         #do checking here
+        ss = time.time()
         if(result.count() != 0):
+            print("--- %s seconds ---" % (time.time() - ss))
             current_matching_term = first
             current_search_term = current_search_term[1:]
             current_node = result.select("dst").collect()[0]["dst"]
@@ -212,11 +222,14 @@ while len(current_search_term) > 0:
         #here we have a matching path in hand and are checking if this motif is larger
         result = search_graph_from_id(g, current_node, first)
         #do checking here
+        ss = time.time()
         if(result.count() != 0):
+            print("--- %s seconds ---" % (time.time() - ss))
             current_matching_term += first
             current_search_term = current_search_term[1:]
             current_node = result.select("dst").collect()[0]["dst"]
         else:
+            print("--- %s seconds ---" % (time.time() - ss))
             #motif stops here
             matching_motif_patterns.append(current_matching_term)
             current_matching_term =""
