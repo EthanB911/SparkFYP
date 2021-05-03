@@ -4,6 +4,7 @@ from trie import add, TrieNode, find_matching_prefix
 from Matrices.get_replacement_dict import get_replacement_dict
 from Tries.suffix_trie import SuffixTree
 from Bio import SeqIO, AlignIO
+import time
 from pyspark.sql import SQLContext
 import re
 from Bio.Align import AlignInfo
@@ -86,7 +87,12 @@ def verts_edges_to_graphframe(v, e):
     return GraphFrame(verts, edgs)
 
 trie = SuffixTree("xabxac")
-trie.add("xabxac")
+# trie.add("xabxac")
+trie.add("ethan")
+trie.add("ethen")
+trie.add("banana")
+trie.add("xadina")
+# trie.add("banana")
 
 vertices, edges = trie.proper_to_graphframe(0)
 g = verts_edges_to_graphframe(vertices, edges)
@@ -96,36 +102,110 @@ g.edges.show()
 
 # paths = g.bfs("name = 'root'","name = '$'")
 # paths.show()
-rt = g.vertices.filter("name='root'").select("id").collect()[0]["id"]
-print(rt)
+# rt = g.vertices.filter("name='root'").select("id").collect()[0]["id"]
+# print(rt)
 
 motif = g.find("(x)-[e1]->(x1)")\
         .filter("x.name='root'")\
-        .filter("x1.name='x'")\
+        .filter("x1.name='n'")\
         .select('e1.src', 'e1.dst')
 motif.show()
 
+start_time = time.time()
+print("Destination")
+
+print()
+print("--- %s seconds ---" % (time.time() - start_time))
+motif.foreach(lambda row:
+    print(row['src'])
+    )
+# serch = g.ed
+
+
 # edges = g.edges.filter("src="+str(rt)).show()
 
+def search_graph_from_root(graph, next):
+    start_time = time.time()
+    motif = graph.find("(x)-[e1]->(x1)") \
+        .filter("x.name='root'")\
+        .filter("x1.name='" + next+"'") \
+        .select('e1.src', 'e1.dst')
+    print(next)
+    motif.show()
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return motif
 
 
 
+def search_graph_from_id(graph,current,  next):
+    start_time = time.time()
+    motif = graph.find("(x)-[e1]->(x1)") \
+        .filter("e1.src=" + str(current))\
+        .filter("x1.name='" + next+"'") \
+        .select('e1.src', 'e1.dst')
+    print(str(current) + "to " + next)
+    motif.show()
+    print("--- %s seconds ---" % (time.time() - start_time))
+    print(motif.count())
+    return motif
+
+# search_graph_from_id(g, 0, "d")
 
 # trie = all_fasta_alignments_to_trie()
 # g = trie_to_graphframe(trie)
 #search algorithm?
 
 list_of_superfamilies = []
-search_term = "ethan"
-current_search_term = "than"
+search_term = "ethna"
+current_search_term = "ethna"
+current_matching_term = ""
 matching_motif_patterns = []
 score_dictionary = {}
-
+print(len(current_matching_term))
 
 #steps
 
 #1. Arrive at superfamily using subgraph routine
 #probably a while loop(while word is not null or something
+
+current_node = "root"
+while len(current_search_term) > 0:
+    print("Current search term: " + current_search_term)
+    first = current_search_term[0]
+
+    if(len(current_matching_term) == 0):
+        result =  search_graph_from_root(g,first)
+        #do checking here
+        if(result.count() != 0):
+            current_matching_term = first
+            current_search_term = current_search_term[1:]
+            current_node = result.select("dst").collect()[0]["dst"]
+
+    else:
+        #here we have a matching path in hand and are checking if this motif is larger
+        result = search_graph_from_id(g, current_node, first)
+        #do checking here
+        if(result.count() != 0):
+            current_matching_term += first
+            current_search_term = current_search_term[1:]
+            current_node = result.select("dst").collect()[0]["dst"]
+        else:
+            #motif stops here
+            matching_motif_patterns.append(current_matching_term)
+            current_matching_term =""
+            current_node="root"
+
+    print("Current search term after check: " + current_search_term)
+
+#if current_mathing is not empty add it!
+if(len(current_matching_term) != 0 ):
+    matching_motif_patterns.append(current_matching_term)
+
+
+print("Mathed patterns: ")
+print(matching_motif_patterns)
+
+
 #2. Get first character and check if next node matches
 #find all occurances where src is the root of the superfamily and dest matches word.
 #for each word check if next word matches until word is finished or word does not match

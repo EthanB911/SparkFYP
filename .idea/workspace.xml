@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Spark.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Spark.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +36,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.suffix_trie">
+  <component name="RunManager" selected="Python.consensus_Trie">
     <configuration name="blums62" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spark" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -235,7 +237,35 @@
       <option name="project" value="LOCAL" />
       <updated>1619568826103</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="trie to graphframes method completed">
+      <created>1619609008548</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1619609008548</updated>
+    </task>
+    <task id="LOCAL-00008" summary="quick save">
+      <created>1619902012109</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1619902012109</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added method where node can only containe one single letter in the trie, therefore more nodes when compared to the the previous trie which stored suffix per node">
+      <created>1619908578022</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1619908578022</updated>
+    </task>
+    <task id="LOCAL-00010" summary="motif example">
+      <created>1619911577198</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1619911577198</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -257,7 +287,11 @@
     <MESSAGE value="Experimenting with searching and filtering dataframes." />
     <MESSAGE value="Commenting process for searching" />
     <MESSAGE value="added suffix trie" />
-    <option name="LAST_COMMIT_MESSAGE" value="added suffix trie" />
+    <MESSAGE value="trie to graphframes method completed" />
+    <MESSAGE value="quick save" />
+    <MESSAGE value="Added method where node can only containe one single letter in the trie, therefore more nodes when compared to the the previous trie which stored suffix per node" />
+    <MESSAGE value="motif example" />
+    <option name="LAST_COMMIT_MESSAGE" value="motif example" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -279,23 +313,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>108</line>
-          <option name="timeStamp" value="18" />
+          <line>117</line>
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>102</line>
-          <option name="timeStamp" value="19" />
+          <line>174</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>99</line>
-          <option name="timeStamp" value="20" />
+          <line>156</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>97</line>
-          <option name="timeStamp" value="21" />
+          <line>179</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
