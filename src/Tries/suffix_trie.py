@@ -187,8 +187,8 @@ class SuffixTree:
 
         f(0, "", generatedId, "null")
         print(self.count)
-        print(verts)
-        print(edges)
+        # print(verts)
+        # print(edges)
         return verts, edges
 
 

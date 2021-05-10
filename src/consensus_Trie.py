@@ -42,9 +42,9 @@ def allCharactersSame(s):
     return True
 
 def all_fasta_alignments_to_trie():
-    arr = os.listdir('/Users/ethan/Downloads/1.10.1870.10/full_alignments/')
+    arr = os.listdir('/Users/ethan/Downloads/1.10.1870.10/full/')
     print(arr)
-    root = TrieNode('1.10.1870.10')
+    trie = SuffixTree("1.10.1870.10")
     # substitutions = {'R': 'N', 'L': 'Q'}
     substitutions = get_replacement_dict()
     # for key, value in substitutions.items():
@@ -52,23 +52,23 @@ def all_fasta_alignments_to_trie():
     #     for val in value:
     #         print(key, '->', val)
     for path in arr:
-        file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full_alignments/"+path, "fasta")
+        file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full/"+path, "fasta")
         print('path:' + path)
 
         summary_align = AlignInfo.SummaryInfo(file)
 
         consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
         if(allCharactersSame(consenus) != True):
-            add(root, consenus)
+            trie.add(consenus, path)
             for key, value in substitutions.items():
                 for val in value:
 
                     print(key, '->', val)
                     subst = consenus.replace(key, val)
                     print(subst)
-                    add(root, subst)
+                    trie.add(subst, path)
 
-    return root
+    return trie
 
 # def trie_to_graphframe(root):
 #     spark = get_spark_session()
@@ -82,16 +82,46 @@ def all_fasta_alignments_to_trie():
 #     return graph
 
 def verts_edges_to_graphframe(v, e):
+    start_time = time.time()
     spark = get_spark_session()
     sqlContext = SQLContext(spark.sparkContext)
     verts = sqlContext.createDataFrame(v, ["id", "name", "superfamily"])
-    edgs = sqlContext.createDataFrame(e, ["src", "dst"])
+    edgs = sqlContext.createDataFrame(e, ["src", "dst", "family"])
+    print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
 
-trie = SuffixTree("xabxac")
-# trie.add("xabxac")
+# trie = SuffixTree("xabxac")
+# trie.add("ethan", "bri")
+#
+# trie.add("banana", "a1")
 
-trie.add("banana", "a1")
+# trie = all_fasta_alignments_to_trie()
+# #
+# vertices, edges = trie.proper_to_graphframe(0)
+# g = verts_edges_to_graphframe(vertices, edges)
+# g.cache()
+# motif = g.find("(x)-[e1]->(x1)") \
+#         .filter("x1.name = '$'") \
+#         .select('e1.src', 'e1.dst', 'e1.family')
+# motif.show()
+
+def save_graphframe(graph):
+    graph.vertices.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
+    graph.edges.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
+    print('saved')
+def load_graph():
+    start_time = time.time()
+    spark = get_spark_session()
+    sqlContext = SQLContext(spark.sparkContext)
+    verts = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
+    edgs = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return GraphFrame(verts, edgs)
+
+g= load_graph()
+g.cache()
+
+
 # trie.add("xadina")
 # trie.add("bbababab")
 # trie.add("malcom")
@@ -114,47 +144,12 @@ trie.add("banana", "a1")
 
 # trie.add("banana")
 
-vertices, edges = trie.proper_to_graphframe(0)
-g = verts_edges_to_graphframe(vertices, edges)
-g.cache()
+
 
 # g.persist(storageLevel=pyspark.StorageLevel.MEMORY_ONLY)
 
 
-# paths = g.bfs("name = 'root'","name = '$'")
-# paths.show()
-# rt = g.vertices.filter("name='root'").select("id").collect()[0]["id"]
-# print(rt)
 
-# motif = g.find("(x)-[e1]->(x1)")\
-#         .filter("x.name='root'")\
-#         .filter("x1.name='n'")\
-#         .select('e1.src', 'e1.dst')
-# motif.show()
-#
-# start_time = time.time()
-# print("Destination")
-#
-# print()
-# print("--- %s seconds ---" % (time.time() - start_time))
-# motif.foreach(lambda row:
-#     print(row['src'])
-#     )
-# t1 = time.time()
-# subg = g.vertices.filter("name='e'")
-# print(subg)
-#
-# print("--- %s seconds ---" % (time.time() - t1))
-
-# motif = g.find("(x)-[e1]->(x1)")\
-#         .filter("x.name='root'")\
-#         .filter("x1.name='e'")\
-#         .select('e1.src', 'e1.dst')
-#
-#
-# t2 = time.time()
-# print(motif.count())
-# print("--- %s seconds ---" % (time.time() - t2))
 
 
 # edges = g.edges.filter("src="+str(rt)).show()
@@ -164,7 +159,7 @@ def search_graph_from_root(graph, next):
     motif = graph.find("(x)-[e1]->(x1)") \
         .filter("x.name='root'")\
         .filter("x1.name='" + next+"'") \
-        .select('e1.src', 'e1.dst')
+        .select('e1.src', 'e1.dst', 'e1.family')
 
     print("--- %s seconds ---" % (time.time() - start_time))
     return motif
@@ -174,9 +169,10 @@ def search_graph_from_root(graph, next):
 def search_graph_from_id(graph,current,  next):
     start_time = time.time()
     motif = graph.find("(x)-[e1]->(x1)") \
-        .filter("e1.src=" + str(current))\
-        .filter("x1.name='" + next+"'") \
-        .select('e1.src', 'e1.dst')
+        .filter("e1.src=" + str(current)) \
+        .filter("x1.name='" + next + "'") \
+        .select('e1.src', 'e1.dst', 'e1.family')
+    # .filter("x1.name='" + next+"' or x1.name = '$'") \
 
     print("--- %s seconds ---" % (time.time() - start_time))
     return motif
@@ -194,8 +190,8 @@ def alternative_search(graph):
 #search algorithm?
 
 list_of_superfamilies = []
-search_term = "ethna"
-current_search_term = "ethna"
+search_term = "eth"
+current_search_term = "eth"
 current_matching_term = ""
 matching_motif_patterns = []
 score_dictionary = {}
@@ -237,6 +233,7 @@ while len(current_search_term) > 0:
             print("After count")
             print("--- %s seconds ---" % (time.time() - ss))
             #motif stops here
+            # matching_motif_patterns.append((current_matching_term,result.select("family").collect()[0]["family"]))
             matching_motif_patterns.append(current_matching_term)
             current_matching_term =""
             current_node= "root"
