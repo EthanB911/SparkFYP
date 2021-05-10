@@ -16,6 +16,8 @@ def get_spark_session():
         .appName("Word Count") \
         .enableHiveSupport() \
         .config("spark.executor.memory", "1000m") \
+        .config("spark.sql.inMemoryColumnarStorage.compressed", True) \
+        .config("spark.sql.inMemoryColumnarStorage.batchSize", "10000") \
         .config("spark.executor.instances", "4") \
         .config("spark.executor.cores", "4") \
         .getOrCreate()

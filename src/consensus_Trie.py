@@ -7,6 +7,7 @@ from Tries.suffix_trie import SuffixTree
 from Bio import SeqIO, AlignIO
 import time
 from pyspark.sql import SQLContext
+import pyspark
 import re
 from Bio.Align import AlignInfo
 import os
@@ -90,32 +91,34 @@ def verts_edges_to_graphframe(v, e):
 trie = SuffixTree("xabxac")
 # trie.add("xabxac")
 
-trie.add("banana")
-trie.add("xadina")
-trie.add("bbababab")
-trie.add("malcom")
-trie.add("michael")
-trie.add("aaiert")
-trie.add("depbajkd")
-trie.add("dembabkeumdsk")
-trie.add("peterporsche")
-trie.add("ferrarialfaromeo")
-# trie.add("mercedesprojecgtone")
-trie.add("bradley")
-trie.add("wizascooot")
-trie.add("sheesh")
-trie.add("jadebriffa")
-trie.add("jpseph")
-trie.add("bonello")
-# trie.add("forceininasauberamggts")
-trie.add("ethan")
-trie.add("ethen")
+trie.add("banana", "a1")
+# trie.add("xadina")
+# trie.add("bbababab")
+# trie.add("malcom")
+# trie.add("michael")
+# trie.add("aaiert")
+# trie.add("depbajkd")
+# trie.add("dembabkeumdsk")
+# trie.add("peterporsche")
+# trie.add("ferrarialfaromeo")
+# # trie.add("mercedesprojecgtone")
+# trie.add("bradley")
+# trie.add("wizascooot")
+# trie.add("sheesh")
+# trie.add("jadebriffa")
+# trie.add("jpseph")
+# trie.add("bonello")
+# # trie.add("forceininasauberamggts")
+# trie.add("ethan")
+# trie.add("ethen")
 
 # trie.add("banana")
 
 vertices, edges = trie.proper_to_graphframe(0)
 g = verts_edges_to_graphframe(vertices, edges)
 g.cache()
+
+# g.persist(storageLevel=pyspark.StorageLevel.MEMORY_ONLY)
 
 
 # paths = g.bfs("name = 'root'","name = '$'")
@@ -236,7 +239,7 @@ while len(current_search_term) > 0:
             #motif stops here
             matching_motif_patterns.append(current_matching_term)
             current_matching_term =""
-            current_node="root"
+            current_node= "root"
 
     print("Current search term after check: " + current_search_term)
 
