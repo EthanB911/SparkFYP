@@ -90,7 +90,7 @@ def verts_edges_to_graphframe(v, e):
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
 
-# trie = SuffixTree("xabxac")
+trie = SuffixTree("xabxac")
 # trie.add("ethan", "bri")
 #
 # trie.add("banana", "a1")
@@ -118,30 +118,32 @@ def load_graph():
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
 
-g= load_graph()
+# g= load_graph()
+# g.cache()
+
+
+trie.add("xadina", "e1")
+trie.add("bbababab", "e1")
+trie.add("malcom", "e1")
+trie.add("michael", "e1")
+trie.add("aaiert", "e1")
+trie.add("depbajkd", "e1")
+trie.add("dembabkeumdsk", "e1")
+trie.add("peterporsche", "e1")
+trie.add("ferrarialfaromeo", "e1")
+# trie.add("mercedesprojecgtone", "e1")
+trie.add("bradley", "e1")
+trie.add("wizascooot", "e1")
+trie.add("sheesh", "e1")
+trie.add("jadebriffa", "e1")
+trie.add("jpseph", "e1")
+trie.add("bonello", "e1")
+# trie.add("forceininasauberamggts", "e1")
+trie.add("ethan", "e1")
+trie.add("ethen", "e1")
+vertices, edges = trie.proper_to_graphframe(0)
+g = verts_edges_to_graphframe(vertices, edges)
 g.cache()
-
-
-# trie.add("xadina")
-# trie.add("bbababab")
-# trie.add("malcom")
-# trie.add("michael")
-# trie.add("aaiert")
-# trie.add("depbajkd")
-# trie.add("dembabkeumdsk")
-# trie.add("peterporsche")
-# trie.add("ferrarialfaromeo")
-# # trie.add("mercedesprojecgtone")
-# trie.add("bradley")
-# trie.add("wizascooot")
-# trie.add("sheesh")
-# trie.add("jadebriffa")
-# trie.add("jpseph")
-# trie.add("bonello")
-# # trie.add("forceininasauberamggts")
-# trie.add("ethan")
-# trie.add("ethen")
-
 # trie.add("banana")
 
 
@@ -190,8 +192,8 @@ def alternative_search(graph):
 #search algorithm?
 
 list_of_superfamilies = []
-search_term = "eth"
-current_search_term = "eth"
+search_term = "ethporsche"
+current_search_term = "ethporsche"
 current_matching_term = ""
 matching_motif_patterns = []
 score_dictionary = {}
