@@ -95,7 +95,8 @@ trie = SuffixTree("xabxac")
 #
 # trie.add("banana", "a1")
 
-# trie = all_fasta_alignments_to_trie()
+trie = all_fasta_alignments_to_trie()
+trie.visualize()
 # #
 # vertices, edges = trie.proper_to_graphframe(0)
 # g = verts_edges_to_graphframe(vertices, edges)
@@ -109,6 +110,7 @@ def save_graphframe(graph):
     graph.vertices.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
     graph.edges.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
     print('saved')
+
 def load_graph():
     start_time = time.time()
     spark = get_spark_session()
@@ -122,38 +124,39 @@ def load_graph():
 # g.cache()
 
 
-trie.add("xadina", "e1")
-trie.add("bbababab", "e1")
-trie.add("malcom", "e1")
-trie.add("michael", "e1")
-trie.add("aaiert", "e1")
-trie.add("depbajkd", "e1")
-trie.add("dembabkeumdsk", "e1")
-trie.add("peterporsche", "e1")
-trie.add("ferrarialfaromeo", "e1")
-# trie.add("mercedesprojecgtone", "e1")
-trie.add("bradley", "e1")
-trie.add("wizascooot", "e1")
-trie.add("sheesh", "e1")
-trie.add("jadebriffa", "e1")
-trie.add("jpseph", "e1")
-trie.add("bonello", "e1")
-# trie.add("forceininasauberamggts", "e1")
-trie.add("ethan", "e1")
-trie.add("ethen", "e1")
-vertices, edges = trie.proper_to_graphframe(0)
-g = verts_edges_to_graphframe(vertices, edges)
-g.cache()
+# trie.add("xadina", "e1")
+# trie.add("bbababab", "e1")
+# trie.add("malcom", "e1")
+# trie.add("michael", "e1")
+# trie.add("aaiert", "e1")
+# trie.add("depbajkd", "e1")
+# trie.add("dembabkeumdsk", "e1")
+# trie.add("peterporsche", "e1")
+# trie.add("ferrarialfaromeo", "e1")
+# # trie.add("mercedesprojecgtone", "e1")
+# trie.add("bradley", "e1")
+# trie.add("wizascooot", "e1")
+# trie.add("sheesh", "e1")
+# trie.add("jadebriffa", "e1")
+# trie.add("jpseph", "e1")
+# trie.add("bonello", "e1")
+# # trie.add("forceininasauberamggts", "e1")
+# trie.add("ethan", "e1")
+#---------------------------_----------------------
+# trie.add("banana", "e1")
+# trie.add("banuna", "e1")
+# trie.add("binana", "e2")
+# vertices, edges = trie.proper_to_graphframe(0)
+# g = verts_edges_to_graphframe(vertices, edges)
+# g.cache()
+# motif = g.find("(x)-[e1]->(x1)") \
+#         .filter("x.name='root'") \
+#         .filter("x1.name='b'") \
+#         .select('e1.src', 'e1.dst', 'e1.family')
+# motif.show()
 # trie.add("banana")
 
-
-
 # g.persist(storageLevel=pyspark.StorageLevel.MEMORY_ONLY)
-
-
-
-
-
 # edges = g.edges.filter("src="+str(rt)).show()
 
 def search_graph_from_root(graph, next):
@@ -188,68 +191,69 @@ def alternative_search(graph):
 # search_graph_from_id(g, 0, "d")
 
 # trie = all_fasta_alignments_to_trie()
-# g = trie_to_graphframe(trie)
+# g = trie.to_graphframe(trie)
 #search algorithm?
-
-list_of_superfamilies = []
-search_term = "ethporsche"
-current_search_term = "ethporsche"
-current_matching_term = ""
-matching_motif_patterns = []
-score_dictionary = {}
-print(len(current_matching_term))
-
-#steps
-
-#1. Arrive at superfamily using subgraph routine
-#probably a while loop(while word is not null or something
-s = time.time()
-current_node = "root"
-while len(current_search_term) > 0:
-    print("Current search term: " + current_search_term)
-    first = current_search_term[0]
-
-    if(len(current_matching_term) == 0):
-        result =  search_graph_from_root(g,first)
-        #do checking here
-        ss = time.time()
-        if(result.count() != 0):
-            print("After count")
-            print("--- %s seconds ---" % (time.time() - ss))
-            current_matching_term = first
-            current_search_term = current_search_term[1:]
-            current_node = result.select("dst").collect()[0]["dst"]
-
-    else:
-        #here we have a matching path in hand and are checking if this motif is larger
-        result = search_graph_from_id(g, current_node, first)
-        #do checking here
-        ss = time.time()
-        if(result.count() != 0):
-            print("After count")
-            print("--- %s seconds ---" % (time.time() - ss))
-            current_matching_term += first
-            current_search_term = current_search_term[1:]
-            current_node = result.select("dst").collect()[0]["dst"]
-        else:
-            print("After count")
-            print("--- %s seconds ---" % (time.time() - ss))
-            #motif stops here
-            # matching_motif_patterns.append((current_matching_term,result.select("family").collect()[0]["family"]))
-            matching_motif_patterns.append(current_matching_term)
-            current_matching_term =""
-            current_node= "root"
-
-    print("Current search term after check: " + current_search_term)
-
-#if current_mathing is not empty add it!
-if(len(current_matching_term) != 0 ):
-    matching_motif_patterns.append(current_matching_term)
-
-
-print("Mathed patterns: ")
-print(matching_motif_patterns)
-print("--- %s seconds ---" % (time.time() - s))
+#
+# list_of_superfamilies = []
+# search_term = "GAYKALNGFVKLGLINRGAFPALRPDANPLTWKELLCDLVGIS-PSSKCDVLKEAVFKKL"
+# current_search_term = "GYAKALNGFVKLGLINRGAFPALRPDANPLTWKELLCDLVGIS-PSSKCDVLKEAVFKKL"
+# current_matching_term = ""
+# matching_motif_patterns = []
+# score_dictionary = {}
+# print(len(current_matching_term))
+#
+# #steps
+#
+# #1. Arrive at superfamily using subgraph routine
+# #probably a while loop(while word is not null or something
+# s = time.time()
+# current_node = "root"
+# while len(current_search_term) > 0:
+#     print("Current search term: " + current_search_term)
+#     first = current_search_term[0]
+#
+#     if(len(current_matching_term) == 0):
+#         result =  search_graph_from_root(g,first)
+#         #do checking here
+#         ss = time.time()
+#         if(result.count() != 0):
+#             print("After count")
+#             print("--- %s seconds ---" % (time.time() - ss))
+#             current_matching_term = first
+#             current_search_term = current_search_term[1:]
+#             current_node = result.select("dst").collect()[0]["dst"]
+#
+#     else:
+#         #here we have a matching path in hand and are checking if this motif is larger
+#         result = search_graph_from_id(g, current_node, first)
+#         #do checking here
+#         ss = time.time()
+#         # if result found or # found
+#         if(result.count() != 0):
+#             print("After count")
+#             print("--- %s seconds ---" % (time.time() - ss))
+#             current_matching_term += first
+#             current_search_term = current_search_term[1:]
+#             current_node = result.select("dst").collect()[0]["dst"]
+#         else:
+#             print("After count")
+#             print("--- %s seconds ---" % (time.time() - ss))
+#             #motif stops here
+#             # matching_motif_patterns.append((current_matching_term,result.select("family").collect()[0]["family"]))
+#             matching_motif_patterns.append(current_matching_term)
+#             current_matching_term =""
+#             current_node= "root"
+#
+#     print("Current search term after check: " + current_search_term)
+#
+# #if current_mathing is not empty add it!
+# if(len(current_matching_term) != 0 ):
+#     matching_motif_patterns.append(current_matching_term)
+#
+#
+# print("Mathed patterns: ")
+# print(matching_motif_patterns)
+# print("--- %s seconds ---" % (time.time() - s))
 
 #2. Get first character and check if next node matches
 #find all occurances where src is the root of the superfamily and dest matches word.

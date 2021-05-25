@@ -35,7 +35,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.consensus_Trie">
+  <component name="RunManager" selected="Python.suffix_trie">
     <configuration name="blums62" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spark" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -299,7 +299,21 @@
       <option name="project" value="LOCAL" />
       <updated>1620685071212</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="saving and loading graphframes">
+      <created>1620687615191</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1620687615191</updated>
+    </task>
+    <task id="LOCAL-00017" summary="quick state save">
+      <created>1620717606166</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1620717606166</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -330,7 +344,9 @@
     <MESSAGE value="Count a bit faster" />
     <MESSAGE value="added .cache to make it faster" />
     <MESSAGE value="'Added family support in trie, stored in edges in graphframe'" />
-    <option name="LAST_COMMIT_MESSAGE" value="'Added family support in trie, stored in edges in graphframe'" />
+    <MESSAGE value="saving and loading graphframes" />
+    <MESSAGE value="quick state save" />
+    <option name="LAST_COMMIT_MESSAGE" value="quick state save" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -352,13 +368,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>123</line>
+          <line>127</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>191</line>
+          <line>195</line>
           <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

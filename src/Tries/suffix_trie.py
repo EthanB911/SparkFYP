@@ -1,8 +1,9 @@
 class Node:
-    def __init__(self, sub="", children=None, family=""):
+    def __init__(self, sub="", children=None, family=None):
         self.sub = sub
         self.ch = children or []
         self.family = family
+        self.families = family or []
 
 
 class SuffixTree:
@@ -27,13 +28,14 @@ class SuffixTree:
                 if x2 == len(children):
                     # no matching child, remainder of suf becomes new node
                     n2 = len(self.nodes)
-                    self.nodes.append(Node(suf[i:], [], family))
+                    self.nodes.append(Node(suf[i:], [], [family]))
                     if ('$' in suf[i:]):
                         print(suf[i:])
                     self.nodes[n].ch.append(n2)
                     return
                 n2 = children[x2]
                 if self.nodes[n2].sub[0] == b:
+                    self.nodes[n2].families.append(family)
                     break
                 x2 = x2 + 1
 
@@ -44,13 +46,19 @@ class SuffixTree:
                 if suf[i + j] != sub2[j]:
                     # split n2
                     n3 = n2
+
+                    families = self.nodes[n2].families
                     # new node for the part in common
                     n2 = len(self.nodes)
-                    self.nodes.append(Node(sub2[:j], [n3]))
+
+                    families.append(family)
+                    self.nodes.append(Node(sub2[:j], [n3], families))
                     self.nodes[n3].sub = sub2[j:]  # old node loses the part in common
+                    self.nodes[n3].families = [family]
                     if('$' in sub2[j:]):
                         print(sub2[j:])
                     self.nodes[n].ch[x2] = n2
+                    # self.nodes[n].families.append(family)
                     break  # continue down the tree
                 j = j + 1
             i = i + j  # advance past part in common
@@ -140,7 +148,7 @@ class SuffixTree:
             children = self.nodes[n].ch
 
             if len(children) == 0:
-                print("-- ", self.nodes[n].sub, id)
+                print("-- ", self.nodes[n].sub, id, self.nodes[n].family)
 
                 if(len(self.nodes[n].sub) > 1):
                     id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, "1.10.1870.10",  self.nodes[n].family )
@@ -192,6 +200,21 @@ class SuffixTree:
         return verts, edges
 
 
+
+
+
+
+#
+strie = SuffixTree("banana")
+strie.add("ethan", 'a1')
+strie.add("ethanol", 'a2')
+strie.visualize()
+# # strie.add("ethanol")
+# # strie.add("ethanols")
+#
+# vertices, edges = strie.to_graphframe(0)
+# print(vertices)
+# print(edges)
 
 #
 # strie = SuffixTree("banana")
