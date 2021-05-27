@@ -51,22 +51,22 @@ def all_fasta_alignments_to_trie():
     #     print(key, '->', value)
     #     for val in value:
     #         print(key, '->', val)
-    for path in arr:
-        file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full/"+path, "fasta")
-        print('path:' + path)
+    for fun_Fam in arr:
+        file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full/"+fun_Fam, "fasta")
+        print('path:' + fun_Fam)
 
         summary_align = AlignInfo.SummaryInfo(file)
 
         consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
         if(allCharactersSame(consenus) != True):
-            trie.add(consenus, path)
+            trie.add(consenus,'1.10.1870.10', fun_Fam)
             for key, value in substitutions.items():
                 for val in value:
 
                     print(key, '->', val)
                     subst = consenus.replace(key, val)
                     print(subst)
-                    trie.add(subst, path)
+                    trie.add(subst,'1.10.1870.10', fun_Fam)
 
     return trie
 
@@ -98,9 +98,10 @@ trie = SuffixTree("xabxac")
 trie = all_fasta_alignments_to_trie()
 trie.visualize()
 # #
-# vertices, edges = trie.proper_to_graphframe(0)
-# g = verts_edges_to_graphframe(vertices, edges)
-# g.cache()
+vertices, edges = trie.proper_to_graphframe(0)
+g = verts_edges_to_graphframe(vertices, edges)
+g.cache()
+g.vertices.show()
 # motif = g.find("(x)-[e1]->(x1)") \
 #         .filter("x1.name = '$'") \
 #         .select('e1.src', 'e1.dst', 'e1.family')

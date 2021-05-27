@@ -1,9 +1,9 @@
 class Node:
-    def __init__(self, sub="", children=None, family=None):
+    def __init__(self, sub="", children=None, superFamily=None, families=None):
         self.sub = sub
         self.ch = children or []
-        self.family = family
-        self.families = family or []
+        self.superFamily = superFamily
+        self.families = families or []
 
 
 class SuffixTree:
@@ -12,12 +12,12 @@ class SuffixTree:
         self.name = str
 
 
-    def add(self,str, family):
+    def add(self,str, superFamily, funFamily):
         str+='$'
         for i in range(len(str)):
-            self.addSuffix(str[i:], family)
+            self.addSuffix(str[i:], superFamily, funFamily)
 
-    def addSuffix(self, suf, family):
+    def addSuffix(self, suf, superFamily, funFamily):
         n = 0
         i = 0
         while i < len(suf):
@@ -28,14 +28,14 @@ class SuffixTree:
                 if x2 == len(children):
                     # no matching child, remainder of suf becomes new node
                     n2 = len(self.nodes)
-                    self.nodes.append(Node(suf[i:], [], [family]))
+                    self.nodes.append(Node(suf[i:], [], superFamily, [funFamily]))
                     if ('$' in suf[i:]):
                         print(suf[i:])
                     self.nodes[n].ch.append(n2)
                     return
                 n2 = children[x2]
                 if self.nodes[n2].sub[0] == b:
-                    self.nodes[n2].families.append(family)
+                    # self.nodes[n2].families.append(family)
                     break
                 x2 = x2 + 1
 
@@ -47,14 +47,15 @@ class SuffixTree:
                     # split n2
                     n3 = n2
 
-                    families = self.nodes[n2].families
+                    families = self.nodes[n2].families.copy()
                     # new node for the part in common
                     n2 = len(self.nodes)
 
-                    families.append(family)
-                    self.nodes.append(Node(sub2[:j], [n3], families))
+                    if funFamily not in families:
+                        families.append(funFamily)
+                    self.nodes.append(Node(sub2[:j], [n3], superFamily, families))
                     self.nodes[n3].sub = sub2[j:]  # old node loses the part in common
-                    self.nodes[n3].families = [family]
+                    # self.nodes[n3].families = [family]
                     if('$' in sub2[j:]):
                         print(sub2[j:])
                     self.nodes[n].ch[x2] = n2
@@ -74,7 +75,7 @@ class SuffixTree:
         def f(n, pre):
             children = self.nodes[n].ch
             if len(children) == 0:
-                print("-- ", self.nodes[n].sub + " " +  self.nodes[n].family)
+                print("-- ", self.nodes[n].sub + " " + self.nodes[n].superFamily)
                 self.count += 1
                 return
             print("+-", self.nodes[n].sub)
@@ -148,10 +149,10 @@ class SuffixTree:
             children = self.nodes[n].ch
 
             if len(children) == 0:
-                print("-- ", self.nodes[n].sub, id, self.nodes[n].family)
+                print("-- ", self.nodes[n].sub, id, self.nodes[n].families)
 
                 if(len(self.nodes[n].sub) > 1):
-                    id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, "1.10.1870.10",  self.nodes[n].family )
+                    id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, self.nodes[n].superFamily,  self.nodes[n].families )
                     generatedId = id
                 else:
                     verts.append((generatedId, self.nodes[n].sub, "1.10.1870.10"))
@@ -161,24 +162,24 @@ class SuffixTree:
             print("+-", self.nodes[n].sub, id)
             if self.nodes[n].sub != '':
                 if(len(self.nodes[n].sub) > 1):
-                    id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, "1.10.1870.10",  self.nodes[n].family)
+                    id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, self.nodes[n].superFamily,  self.nodes[n].families)
                     generatedId = id
                 else:
-                    verts.append((generatedId, self.nodes[n].sub, "1.10.1870.10"))
+                    verts.append((generatedId, self.nodes[n].sub, self.nodes[n].superFamily))
             else:
-                verts.append((generatedId, "root", "1.10.1870.10"))
+                verts.append((generatedId, "root", self.nodes[n].superFamily))
 
             for c in children[:-1]:
                 print(pre, "+- ", id, end='')
-                edges.append((id, generatedId + 1,  self.nodes[n].family))
+                edges.append((id, generatedId + 1,  self.nodes[n].families))
                 f(c, pre + " | ", generatedId + 1, self.nodes[n].sub)
 
             print(pre, "+- ", id, end='')
-            edges.append((id, generatedId + 1,  self.nodes[n].family))
+            edges.append((id, generatedId + 1,  self.nodes[n].families))
             f(children[-1], pre + "  ", generatedId + 1, self.nodes[n].sub)
             return id
 
-        def recursive_word_vertice_add(id, word, superfam, family):
+        def recursive_word_vertice_add(id, word, superfam, families):
             verts.append((id, word[0], superfam))
 
 
@@ -187,7 +188,7 @@ class SuffixTree:
                 id += 1
                 #add letter to array
                 verts.append((id, letter, superfam))
-                edges.append((id-1, id, family))
+                edges.append((id-1, id, families))
                 #increment id
 
 
@@ -206,8 +207,10 @@ class SuffixTree:
 
 #
 strie = SuffixTree("banana")
-strie.add("ethan", 'a1')
-strie.add("ethanol", 'a2')
+strie.add("ethan", 'a1', '1')
+strie.add("ethanol", 'a2', '2')
+strie.add("ethanal", 'a2', '2')
+strie.add("banana", 'a3', '3')
 strie.visualize()
 # # strie.add("ethanol")
 # # strie.add("ethanols")
