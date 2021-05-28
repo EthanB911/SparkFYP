@@ -56,7 +56,7 @@ def all_fasta_alignments_to_trie():
         print('path:' + fun_Fam)
 
         summary_align = AlignInfo.SummaryInfo(file)
-
+        fun_Fam = fun_Fam.split('-')[2].split('.')[0]
         consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
         if(allCharactersSame(consenus) != True):
             trie.add(consenus,'1.10.1870.10', fun_Fam)
@@ -101,7 +101,7 @@ trie.visualize()
 vertices, edges = trie.proper_to_graphframe(0)
 g = verts_edges_to_graphframe(vertices, edges)
 g.cache()
-g.vertices.show()
+
 # motif = g.find("(x)-[e1]->(x1)") \
 #         .filter("x1.name = '$'") \
 #         .select('e1.src', 'e1.dst', 'e1.family')
@@ -120,7 +120,7 @@ def load_graph():
     edgs = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
-
+save_graphframe(g)
 # g= load_graph()
 # g.cache()
 

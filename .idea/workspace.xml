@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +34,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.suffix_trie">
+  <component name="RunManager" selected="Python.consensus_Trie">
     <configuration name="blums62" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spark" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -326,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621982760364</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Storing superFamily and functionalFamilies in graphframes format">
+      <created>1622116773196</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1622116773196</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -361,7 +368,8 @@
     <MESSAGE value="quick state save" />
     <MESSAGE value="Suffix trie saving family in each vertex" />
     <MESSAGE value="Suffix trie family assignment fixed bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Suffix trie family assignment fixed bug" />
+    <MESSAGE value="Storing superFamily and functionalFamilies in graphframes format" />
+    <option name="LAST_COMMIT_MESSAGE" value="Storing superFamily and functionalFamilies in graphframes format" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
