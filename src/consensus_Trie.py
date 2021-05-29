@@ -90,17 +90,17 @@ def verts_edges_to_graphframe(v, e):
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
 
-trie = SuffixTree("xabxac")
-# trie.add("ethan", "bri")
-#
-# trie.add("banana", "a1")
-
-trie = all_fasta_alignments_to_trie()
-trie.visualize()
+# trie = SuffixTree("xabxac")
+# # trie.add("ethan", "bri")
 # #
-vertices, edges = trie.proper_to_graphframe(0)
-g = verts_edges_to_graphframe(vertices, edges)
-g.cache()
+# # trie.add("banana", "a1")
+#
+# trie = all_fasta_alignments_to_trie()
+# trie.visualize()
+# # #
+# vertices, edges = trie.proper_to_graphframe(0)
+# g = verts_edges_to_graphframe(vertices, edges)
+# g.cache()
 
 # motif = g.find("(x)-[e1]->(x1)") \
 #         .filter("x1.name = '$'") \
@@ -120,9 +120,9 @@ def load_graph():
     edgs = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
-save_graphframe(g)
-# g= load_graph()
-# g.cache()
+# save_graphframe(g)
+g= load_graph()
+g.cache()
 
 
 # trie.add("xadina", "e1")
@@ -160,112 +160,273 @@ save_graphframe(g)
 # g.persist(storageLevel=pyspark.StorageLevel.MEMORY_ONLY)
 # edges = g.edges.filter("src="+str(rt)).show()
 
-def search_graph_from_root(graph, next):
+
+def query_creator(sources):
+    query = "e1.src='" + str(sources[0]['dst']) + "'"
+    for src in sources[1:]:
+        query += " or e1.src='" + str(src['dst']) + "'"
+    return query
+
+
+def get_dollar_families(graph, src):
+    print('search 1')
     start_time = time.time()
-    motif = graph.find("(x)-[e1]->(x1)") \
-        .filter("x.name='root'")\
-        .filter("x1.name='" + next+"'") \
-        .select('e1.src', 'e1.dst', 'e1.family')
-
+    x = graph.find("(x)-[e1]->(x1)") \
+        .filter("x.id='" + str(src) + "'") \
+        .filter("x1.name='$'") \
+        .select('e1.family').collect()
     print("--- %s seconds ---" % (time.time() - start_time))
-    return motif
+    return x
 
 
-
-def search_graph_from_id(graph,current,  next):
+def get_dollar_families_from_children(graph, query_sources):
+    print('search 2')
     start_time = time.time()
-    motif = graph.find("(x)-[e1]->(x1)") \
-        .filter("e1.src=" + str(current)) \
-        .filter("x1.name='" + next + "'") \
-        .select('e1.src', 'e1.dst', 'e1.family')
-    # .filter("x1.name='" + next+"' or x1.name = '$'") \
-
+    x = graph.find("(x)-[e1]->(x1)") \
+        .filter(query_sources) \
+        .filter("x1.name='$'") \
+        .select('e1.family').take(1)
     print("--- %s seconds ---" % (time.time() - start_time))
-    return motif
+    return x
 
-def alternative_search(graph):
+
+def search_graph_from_root(graph, next_term):
+    print('search 3')
     start_time = time.time()
-
-
-
+    x = graph.find("(x)-[e1]->(x1)") \
+        .filter("x.name='root'") \
+        .filter("x1.name='" + next_term + "'") \
+        .select('e1.src', 'e1.dst', 'e1.family').collect()
     print("--- %s seconds ---" % (time.time() - start_time))
-# search_graph_from_id(g, 0, "d")
+    return x
 
-# trie = all_fasta_alignments_to_trie()
-# g = trie.to_graphframe(trie)
-#search algorithm?
-#
-# list_of_superfamilies = []
-# search_term = "GAYKALNGFVKLGLINRGAFPALRPDANPLTWKELLCDLVGIS-PSSKCDVLKEAVFKKL"
-# current_search_term = "GYAKALNGFVKLGLINRGAFPALRPDANPLTWKELLCDLVGIS-PSSKCDVLKEAVFKKL"
-# current_matching_term = ""
-# matching_motif_patterns = []
-# score_dictionary = {}
-# print(len(current_matching_term))
-#
-# #steps
-#
-# #1. Arrive at superfamily using subgraph routine
-# #probably a while loop(while word is not null or something
-# s = time.time()
-# current_node = "root"
-# while len(current_search_term) > 0:
-#     print("Current search term: " + current_search_term)
-#     first = current_search_term[0]
-#
-#     if(len(current_matching_term) == 0):
-#         result =  search_graph_from_root(g,first)
-#         #do checking here
-#         ss = time.time()
-#         if(result.count() != 0):
-#             print("After count")
-#             print("--- %s seconds ---" % (time.time() - ss))
-#             current_matching_term = first
-#             current_search_term = current_search_term[1:]
-#             current_node = result.select("dst").collect()[0]["dst"]
-#
-#     else:
-#         #here we have a matching path in hand and are checking if this motif is larger
-#         result = search_graph_from_id(g, current_node, first)
-#         #do checking here
-#         ss = time.time()
-#         # if result found or # found
-#         if(result.count() != 0):
-#             print("After count")
-#             print("--- %s seconds ---" % (time.time() - ss))
-#             current_matching_term += first
-#             current_search_term = current_search_term[1:]
-#             current_node = result.select("dst").collect()[0]["dst"]
-#         else:
-#             print("After count")
-#             print("--- %s seconds ---" % (time.time() - ss))
-#             #motif stops here
-#             # matching_motif_patterns.append((current_matching_term,result.select("family").collect()[0]["family"]))
-#             matching_motif_patterns.append(current_matching_term)
-#             current_matching_term =""
-#             current_node= "root"
-#
-#     print("Current search term after check: " + current_search_term)
-#
-# #if current_mathing is not empty add it!
-# if(len(current_matching_term) != 0 ):
-#     matching_motif_patterns.append(current_matching_term)
-#
-#
-# print("Mathed patterns: ")
-# print(matching_motif_patterns)
-# print("--- %s seconds ---" % (time.time() - s))
 
-#2. Get first character and check if next node matches
-#find all occurances where src is the root of the superfamily and dest matches word.
-#for each word check if next word matches until word is finished or word does not match
-#When checking for next node always check all children, therefore all nodes where src matches current node, to see all children
+def search_from_multiple_src(graph, query_sources, next_term):
+    print('search 4')
+    print(query_sources)
+    start_time = time.time()
+    x = graph.find("(x)-[e1]->(x1)") \
+        .filter(query_sources) \
+        .filter("x1.name='" + next_term + "' or x1.name = '$'") \
+        .select('e1.src', 'e1.dst', 'e1.family').collect()
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return x
 
-#Repeat for next character , use some sort of pointer to know which is the next word
+
+def search_src_to_term(graph, current_node, next_term):
+    print('search 5')
+    print(current_node)
+    print(next_term)
+    start_time = time.time()
+    x = graph.find("(x)-[e1]->(x1)") \
+        .filter("e1.src=" + str(current_node)) \
+        .filter("x1.name='" + next_term + "' or x1.name = '$'") \
+        .select('e1.src', 'e1.dst', 'e1.family').collect()
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return x
+
+
+def get_children_from_multiple_sources(graph, query_sources):
+    print('search 6')
+    print(query_sources)
+    start_time = time.time()
+    children = graph.find("(x)-[e1]->(x1)") \
+        .filter(query_sources) \
+        .filter("x1.name != '$'") \
+        .select('e1.dst').collect()
+    # still need to implement well..
+    # definetly need to remove where dest = $
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return children
+
+
+def get_children_from_single_source(graph, source_node):
+    print('search 7')
+    print(source_node)
+    start_time = time.time()
+    children = graph.find("(x)-[e1]->(x1)") \
+        .filter("e1.src=" + str(source_node)) \
+        .filter("x1.name != '$'") \
+        .select('e1.dst').collect()
+    # still need to implement well..
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return children
+
+
+def get_next_only_from_source(graph, source_node, next_term):
+    print('search 8')
+    print(source_node)
+    start_time = time.time()
+    x = graph.find("(x)-[e1]->(x1)") \
+        .filter("e1.src=" + str(source_node)) \
+        .filter("x1.name='" + next_term + "'") \
+        .select('e1.src', 'e1.dst', 'e1.family').collect()
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return x
 
 
 
 
+#--- start algo here
+import time
+
+search_term = "PDANPLTWKELLCDLVGIS-PSSKCDVLKEAVFKKLEGDNTQLEAVEWLGLLG-DEQVPRAESLVDALSKHLAMKLS"
+current_search_term = search_term
+matching_term = ""
+prev_match = False  # previous match
+new_match = True  # set to true when we want to start searching from root
+current_node = 0  # pointer to current node
+children_nodes = []
+max_mismatches = 9  # if this value is exceeded search restarts from root
+current_mismatches = 0
+motifs_found = []
+current_matched = 0
+max_matches = 12
+current_families = []
+s = time.time()
+# start algorithm here.
+while len(current_search_term):
+    start_time = time.time()
+    first = current_search_term[0]
+
+    # check if we have overtook max_mismatches or completed a motif.
+    if (current_mismatches > max_mismatches or new_match):
+        # if there were a lot of matches ensure to save it before to disregard it
+        matching_term = ""
+        new_match = False
+        current_mismatches = 0
+        current_matched = 0
+        prev_match = False
+        # search from root if so to find new motif.
+        result = search_graph_from_root(g, first)
+        res_count = len(result)
+
+        if (res_count != 0):
+            # we should have next term here
+            # append it to matching_term
+            prev_match = True
+            matching_term += first
+            current_node = result[0]["dst"]
+            current_families = result[0]["family"]
+            #     prev_match = True
+            current_search_term = current_search_term[1:]
+            current_matched += 1
+        else:
+            # no match found
+            # we need to get all children of current node for next search part
+            prev_match = False
+            matching_term += '-'
+            current_mismatches += 1
+            current_search_term = current_search_term[1:]
+            # get children node of current node.
+            children_nodes = get_children_from_single_source(g, current_node)
+
+    elif (prev_match):
+        result = search_src_to_term(g, current_node, first)
+        res_count = len(result)
+
+        if (res_count != 0):
+            # match found
+            if (res_count == 2):
+                # there is next term and also a $
+                # get $ for its families.
+                families = get_dollar_families(g, current_node)
+                # keep going as if we found next only?
+                matching_term += first
+                motifs_found.append({'motif': matching_term, 'families': families[0]["family"]})
+
+                next_term_node = get_next_only_from_source(g, current_node, first)
+                current_node = next_term_node[0]["dst"]
+                current_families = next_term_node[0]["family"]
+                #       prev_match = True
+                current_search_term = current_search_term[1:]
+                current_matched += 1
+            else:
+                # there is only 1 term, so get it and see what it is.
+                dst = result[0]["dst"]
+                if (dst == '$'):
+                    # motif ends here
+                    # get families here
+                    motifs_found.append({'motif': matching_term, 'families': result[0]["family"]})
+                    new_match = True
 
 
+                else:
+                    # we should have next term here
+                    # append it to matching_term
+                    matching_term += first
+                    current_node = dst
+                    #         prev_match = True
+                    current_families = result[0]["family"]
+                    current_search_term = current_search_term[1:]
+                    current_matched += 1
+        else:
+            # no match found
+            # we need to get all children of current node for next search part
+            prev_match = False
+            matching_term += '-'
+            current_mismatches += 1
+            current_search_term = current_search_term[1:]
+            # get children node of current node.
+            children_nodes = get_children_from_single_source(g, current_node)
+    else:
+        # previous search didn't match
+        # here we should have a list of source nodes.
+        # search from all source nodes for next term
+        result = search_from_multiple_src(g, query_creator(children_nodes), first)
+        res_count = len(result)
+        if (res_count != 0):
+            # match found
+            prev_match = True
+            if (res_count >= 2):
+                # there is next term, possibly more than 1 and possibly a $ sign
+                # possible motif found, add it but keep going as if we didn't finish it.
+                #families = get_dollar_families_from_children(g, query_creator(children_nodes))
+                matching_term += first
+                # keep going as if we found next only?
+                #motifs_found.append({'motif': matching_term, 'families': families[0]["family"]})
 
+                current_node = result[0]["dst"]
+                #       prev_match = True
+                current_search_term = current_search_term[1:]
+                current_matched += 1
+            else:
+                # there is only 1 term, so get it and see what it is.
+                dst = result[0]["dst"]
+                if (dst == '$'):
+                    # motif ends here
+                    # get families here
+                    motifs_found.append({'motif': matching_term, 'families': result[0]["family"]})
+                    new_match = True
+
+                else:
+                    # we should have next term here
+                    # append it to matching_term
+                    matching_term += first
+                    current_node = dst
+                    prev_match = True
+                    current_families = result[0]["family"]
+                    current_search_term = current_search_term[1:]
+                    current_matched += 1
+        else:
+            # no match found
+            # we need to get all children of current node for next search part
+            prev_match = False
+            matching_term += '-'
+            current_mismatches += 1
+            current_search_term = current_search_term[1:]
+            # get children node of current node.
+            children_nodes = get_children_from_multiple_sources(g, query_creator(children_nodes))
+
+    # after search is computed always check if we have matched multiple terms to stop traversing current branch
+    # so compare current matched and get current_node families or just keep track of families being visited..
+    # if case holds set new_match to true
+    if (current_matched >= max_matches):
+        motifs_found.append({'motif': matching_term, 'families': current_families})
+        new_match = True
+    print(current_matched)
+    print(current_search_term)
+    print("--- %s seconds ---" % (time.time() - start_time))
+print(motifs_found)
+print("--- %s seconds ---" % (time.time() - s))
+# if out of while loop and current_match not empty see if we can add it ....
