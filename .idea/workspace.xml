@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -340,7 +341,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622205694124</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="transferred new search here from other repository">
+      <created>1622317927433</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1622317927433</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -377,7 +385,8 @@
     <MESSAGE value="Suffix trie family assignment fixed bug" />
     <MESSAGE value="Storing superFamily and functionalFamilies in graphframes format" />
     <MESSAGE value="Getting a substring to get funfam in a more appropriate format" />
-    <option name="LAST_COMMIT_MESSAGE" value="Getting a substring to get funfam in a more appropriate format" />
+    <MESSAGE value="transferred new search here from other repository" />
+    <option name="LAST_COMMIT_MESSAGE" value="transferred new search here from other repository" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -408,9 +417,9 @@
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>68</line>
-          <option name="timeStamp" value="42" />
+          <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
+          <line>123</line>
+          <option name="timeStamp" value="43" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
