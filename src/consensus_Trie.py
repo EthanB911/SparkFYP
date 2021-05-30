@@ -17,20 +17,28 @@ import os
 print(os.__file__)
 
 def fasta_to_trie():
-    file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/full_alignments/1.10.1870.10-FF-000002.faa", "fasta")
+    # substitutions = {'R': 'N', 'L': 'Q'}
+    substitutions = get_replacement_dict()
 
-    summary_align = AlignInfo.SummaryInfo(file)
-    substitutions = {'R': 'N', 'L': 'Q'}
+    trie = SuffixTree("1.10.1870.10")
+    fams  = os.listdir('/Users/ethan/Downloads/1.10.1870.10/rest_alignments/')
+    for fun_Fam in fams:
+        file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/rest_alignments/" + fun_Fam , "fasta")
+        print('path:' + fun_Fam)
 
-    #initialize trie
-    root = TrieNode('1.10.1870.10-FF-000002')
-    consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
-    add(root, consenus)
-    for key, value in substitutions.items():
-        print(key, '->', value)
-        subst = consenus.replace(key, value)
-        print(subst)
-        add(root, subst)
+        summary_align = AlignInfo.SummaryInfo(file)
+        fun_Fam = fun_Fam.split('-')[2].split('.')[0]
+        consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
+        if(allCharactersSame(consenus) != True):
+            trie.add(consenus,'1.10.1870.10', fun_Fam)
+            for key, value in substitutions.items():
+                for val in value:
+
+                    print(key, '->', val)
+                    subst = consenus.replace(key, val)
+                    print(subst)
+                    trie.add(subst,'1.10.1870.10', fun_Fam)
+    return trie
 
 
 def allCharactersSame(s):
@@ -92,7 +100,9 @@ def verts_edges_to_graphframe(v, e):
     start_time = time.time()
     spark = get_spark_session()
     sqlContext = SQLContext(spark.sparkContext)
+    print('started')
     verts = sqlContext.createDataFrame(v, ["id", "name", "superfamily"])
+    print('vertices done')
     edgs = sqlContext.createDataFrame(e, ["src", "dst", "family"])
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
@@ -110,47 +120,30 @@ def load_graph():
     edgs = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
-# trie = SuffixTree("xabxac")
-# # trie.add("ethan", "bri")
-# #
-# # trie.add("banana", "a1")
+
+
+#load all super families
+# tries = all_fasta_alignments_to_trie()
 #
-tries = all_fasta_alignments_to_trie()
-
-id = 0
-total_vertices = []
-total_edges = []
-for trie in tries:
-    vertices,edges, id = trie.proper_to_graphframe(id)
-    total_vertices += vertices
-    total_edges += edges
-    print('vertices size')
-    print(len(vertices))
-
-    print('esdges size')
-    print(len(edges))
-    print('generated id')
-    print(id)
-
-print('vertices size')
-print(len(total_vertices))
-
-print('esdges size')
-print(len(total_edges))
-print('generated id')
-print(id)
-# # #
-# vertices, edges = trie.proper_to_graphframe(0)
-# g = verts_edges_to_graphframe(vertices, edges)
-# g.cache()
-
-# motif = g.find("(x)-[e1]->(x1)") \
-#         .filter("x1.name = '$'") \
-#         .select('e1.src', 'e1.dst', 'e1.family')
-# motif.show()
-
-
+# id = 0
+# total_vertices = []
+# total_edges = []
+# for trie in tries:
+#     vertices,edges, id = trie.proper_to_graphframe(id)
+#     total_vertices += vertices
+#     total_edges += edges
+# # # #
+# # vertices, edges = trie.proper_to_graphframe(0)
+# g = verts_edges_to_graphframe(total_vertices, total_edges)
 # save_graphframe(g)
+
+#load 1 superfamily
+trie = fasta_to_trie()
+vertices, edges, id = trie.proper_to_graphframe(0)
+g = verts_edges_to_graphframe(vertices, edges)
+save_graphframe(g)
+
+
 # g= load_graph()
 # g.cache()
 
