@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -354,7 +353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622320915653</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="MEthod for  generating 1 superfamily only">
+      <created>1622371714634</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1622371714634</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -393,7 +399,8 @@
     <MESSAGE value="Getting a substring to get funfam in a more appropriate format" />
     <MESSAGE value="transferred new search here from other repository" />
     <MESSAGE value="Changed algorithm for creation of graphframe..&#10;Now it can be run on all superfamilies." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed algorithm for creation of graphframe..&#10;Now it can be run on all superfamilies." />
+    <MESSAGE value="MEthod for  generating 1 superfamily only" />
+    <option name="LAST_COMMIT_MESSAGE" value="MEthod for  generating 1 superfamily only" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -420,7 +427,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
-          <line>134</line>
+          <line>136</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>

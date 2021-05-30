@@ -90,7 +90,7 @@ def all_fasta_alignments_to_trie():
 #     sqlContext = SQLContext(spark.sparkContext)
 #
 #     convert_Trie_To_Table(root, 0)
-#     vertices = sqlContext.createDataFrame(verts, ["id", "name", "superfamily"])
+#     vertices = sqlsContext.createDataFrame(verts, ["id", "name", "superfamily"])
 #     vertices.show()
 #     edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
 #     graph = GraphFrame(vertices, edgesspark)
