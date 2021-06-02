@@ -4,6 +4,7 @@
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -368,7 +369,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622377523874</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Storing all super families">
+      <created>1622629852434</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1622629852434</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -384,7 +392,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added graphframes and visualization" />
     <MESSAGE value="Visualization of graphframe" />
     <MESSAGE value="Added subst matrix and add all substitutions of the consensus to trie." />
     <MESSAGE value="Experimenting with searching and filtering dataframes." />
@@ -409,7 +416,8 @@
     <MESSAGE value="Changed algorithm for creation of graphframe..&#10;Now it can be run on all superfamilies." />
     <MESSAGE value="MEthod for  generating 1 superfamily only" />
     <MESSAGE value="Small change in trie creation method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small change in trie creation method" />
+    <MESSAGE value="Storing all super families" />
+    <option name="LAST_COMMIT_MESSAGE" value="Storing all super families" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -431,33 +439,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>141</line>
+          <line>142</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
-          <line>136</line>
+          <line>138</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>77</line>
+          <line>78</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>220</line>
+          <line>221</line>
           <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>62</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>71</line>
-          <option name="timeStamp" value="53" />
+          <line>100</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

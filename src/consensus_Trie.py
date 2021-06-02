@@ -19,18 +19,20 @@ print(os.__file__)
 def fasta_to_trie():
     # substitutions = {'R': 'N', 'L': 'Q'}
     substitutions = get_replacement_dict()
-
+    fasta_dictionary = {}
+    fasta_id = 0
     trie = SuffixTree("1.10.1870.10")
     fams  = os.listdir('/Users/ethan/Downloads/1.10.1870.10/rest_alignments/')
     for fun_Fam in fams:
         file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/rest_alignments/" + fun_Fam , "fasta")
         print('path:' + fun_Fam)
-
+        fasta_dictionary.appen({'id': fasta_id, 'family': fun_Fam})
+        fasta_id += 1
         summary_align = AlignInfo.SummaryInfo(file)
-        fun_Fam = fun_Fam.split('-')[2].split('.')[0]
+        # fun_Fam = fun_Fam.split('-')[2].split('.')[0]
         consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
         if(allCharactersSame(consenus) != True):
-            trie.add(consenus,'1.10.1870.10', fun_Fam)
+            trie.add(consenus, fasta_id)
             for key, value in substitutions.items():
                 for val in value:
 
