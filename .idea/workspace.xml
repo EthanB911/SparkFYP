@@ -35,7 +35,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.suffix_trie">
+  <component name="RunManager" selected="Python.consensus_Trie">
     <configuration name="blums62" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spark" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -376,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622629852434</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Fixed bug , superfamilies are now being sent to parents to ensure each parent of the  node that has a new superfamily, will be addeed to the latter">
+      <created>1622635190861</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1622635190861</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -392,7 +399,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Visualization of graphframe" />
     <MESSAGE value="Added subst matrix and add all substitutions of the consensus to trie." />
     <MESSAGE value="Experimenting with searching and filtering dataframes." />
     <MESSAGE value="Commenting process for searching" />
@@ -417,7 +423,8 @@
     <MESSAGE value="MEthod for  generating 1 superfamily only" />
     <MESSAGE value="Small change in trie creation method" />
     <MESSAGE value="Storing all super families" />
-    <option name="LAST_COMMIT_MESSAGE" value="Storing all super families" />
+    <MESSAGE value="Fixed bug , superfamilies are now being sent to parents to ensure each parent of the  node that has a new superfamily, will be addeed to the latter" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug , superfamilies are now being sent to parents to ensure each parent of the  node that has a new superfamily, will be addeed to the latter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -439,28 +446,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>142</line>
+          <line>155</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
-          <line>138</line>
+          <line>120</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>78</line>
+          <line>91</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>221</line>
-          <option name="timeStamp" value="46" />
+          <line>113</line>
+          <option name="timeStamp" value="55" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>100</line>
-          <option name="timeStamp" value="55" />
+          <line>236</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

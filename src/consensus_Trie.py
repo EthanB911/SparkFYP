@@ -19,14 +19,14 @@ print(os.__file__)
 def fasta_to_trie():
     # substitutions = {'R': 'N', 'L': 'Q'}
     substitutions = get_replacement_dict()
-    fasta_dictionary = {}
+    fasta_dictionary = []
     fasta_id = 0
     trie = SuffixTree("1.10.1870.10")
     fams  = os.listdir('/Users/ethan/Downloads/1.10.1870.10/rest_alignments/')
     for fun_Fam in fams:
         file = AlignIO.read("/Users/ethan/Downloads/1.10.1870.10/rest_alignments/" + fun_Fam , "fasta")
         print('path:' + fun_Fam)
-        fasta_dictionary.appen({'id': fasta_id, 'family': fun_Fam})
+        fasta_dictionary.append({'id': fasta_id, 'family': fun_Fam})
         fasta_id += 1
         summary_align = AlignInfo.SummaryInfo(file)
         # fun_Fam = fun_Fam.split('-')[2].split('.')[0]
@@ -39,8 +39,8 @@ def fasta_to_trie():
                     print(key, '->', val)
                     subst = consenus.replace(key, val)
                     print(subst)
-                    trie.add(subst,'1.10.1870.10', fun_Fam)
-    return trie
+                    trie.add(subst, fasta_id)
+    return trie,fasta_dictionary
 
 
 def allCharactersSame(s):
@@ -52,58 +52,46 @@ def allCharactersSame(s):
     return True
 
 def all_fasta_alignments_to_trie():
-
-
-
-    # substitutions = {'R': 'N', 'L': 'Q'}
     substitutions = get_replacement_dict()
-    # for key, value in substitutions.items():
-    #     print(key, '->', value)
-    #     for val in value:
-    #         print(key, '->', val)
+
     arr = os.listdir('/Users/ethan/Downloads/funfams/')
     print(arr)
-    trieList = []
+
+    fasta_dictionary = []
+    fasta_id = 0
+    trie = SuffixTree("CATH")
     for super_fam in arr:
-        trie = SuffixTree("1.10.1870.10")
+        print(super_fam)
         fams  = os.listdir('/Users/ethan/Downloads/funfams/' + super_fam + '/full_alignments/')
         for fun_Fam in fams:
             file = AlignIO.read("/Users/ethan/Downloads/funfams/" + super_fam + "/full_alignments/" + fun_Fam , "fasta")
             print('path:' + fun_Fam)
+            fasta_dictionary.append({'id': fasta_id, 'family': fun_Fam})
+            fasta_id += 1
 
             summary_align = AlignInfo.SummaryInfo(file)
-            fun_Fam = fun_Fam.split('-')[2].split('.')[0]
+            # fun_Fam = fun_Fam.split('-')[2].split('.')[0]
             consenus = str(summary_align.dumb_consensus(threshold=0, ambiguous='-', require_multiple=1))
             if(allCharactersSame(consenus) != True):
-                trie.add(consenus,'1.10.1870.10', fun_Fam)
+                trie.add(consenus, fasta_id)
                 for key, value in substitutions.items():
                     for val in value:
-
                         print(key, '->', val)
                         subst = consenus.replace(key, val)
                         print(subst)
-                        trie.add(subst,'1.10.1870.10', fun_Fam)
-        trieList.append(trie)
-    print(trieList)
-    return trieList
+                        if subst != consenus:
+                            trie.add(subst, fasta_id)
 
-# def trie_to_graphframe(root):
-#     spark = get_spark_session()
-#     sqlContext = SQLContext(spark.sparkContext)
-#
-#     convert_Trie_To_Table(root, 0)
-#     vertices = sqlsContext.createDataFrame(verts, ["id", "name", "superfamily"])
-#     vertices.show()
-#     edgesspark = sqlContext.createDataFrame(edges, ["src", "dst", "relationship"])
-#     graph = GraphFrame(vertices, edgesspark)
-#     return graph
+    return trie, fasta_dictionary
+
+
 
 def verts_edges_to_graphframe(v, e):
     start_time = time.time()
     spark = get_spark_session()
     sqlContext = SQLContext(spark.sparkContext)
     print('started')
-    verts = sqlContext.createDataFrame(v, ["id", "name", "superfamily"])
+    verts = sqlContext.createDataFrame(v, ["id", "name"])
     print('vertices done')
     edgs = sqlContext.createDataFrame(e, ["src", "dst", "family"])
     print("--- %s seconds ---" % (time.time() - start_time))
@@ -125,25 +113,22 @@ def load_graph():
 
 
 #load all super families
-# tries = all_fasta_alignments_to_trie()
-#
+s = time.time()
+trie, diction = all_fasta_alignments_to_trie()
+print(diction)
+print("--- %s seconds ---" % (time.time() - s))
 # id = 0
-# total_vertices = []
-# total_edges = []
-# for trie in tries:
-#     vertices,edges, id = trie.proper_to_graphframe(id)
-#     total_vertices += vertices
-#     total_edges += edges
-# # # #
-# # vertices, edges = trie.proper_to_graphframe(0)
-# g = verts_edges_to_graphframe(total_vertices, total_edges)
+vertices,edges, id = trie.proper_to_graphframe(id)
+print("--- %s seconds ---" % (time.time() - s))
+g = verts_edges_to_graphframe(vertices, edges)
+print("--- %s seconds ---" % (time.time() - s))
 # save_graphframe(g)
 
 #load 1 superfamily
-trie = fasta_to_trie()
-vertices, edges, id = trie.proper_to_graphframe(0)
-g = verts_edges_to_graphframe(vertices, edges)
-save_graphframe(g)
+# trie = fasta_to_trie()
+# vertices, edges, id = trie.proper_to_graphframe(0)
+# g = verts_edges_to_graphframe(vertices, edges)
+# save_graphframe(g)
 
 
 # g= load_graph()

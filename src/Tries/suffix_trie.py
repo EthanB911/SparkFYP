@@ -43,6 +43,7 @@ class SuffixTree:
             # find prefix of remaining suffix in common with child
             sub2 = self.nodes[n2].sub
             j = 0
+            apply_recurisive = False
             while j < len(sub2):
                 if suf[i + j] != sub2[j]:
                     # split n2
@@ -56,6 +57,7 @@ class SuffixTree:
 
                     if superFamily not in super_families:
                         super_families.append(superFamily)
+                        apply_recurisive = True
 
                     self.nodes.append(Node(sub2[:j], [n3], super_families))
                     self.nodes[n3].sub = sub2[j:]  # old node loses the part in common
@@ -64,8 +66,9 @@ class SuffixTree:
                     if('$' in sub2[j:]):
                         print(sub2[j:])
                     self.nodes[n].ch[x2] = n2
-                    self.nodes[n].superFamily = self.nodes[n2].superFamily
-                    self.recursive_parent_add_family(n, superFamily)
+                    # self.nodes[n].superFamily = super_families
+                    if apply_recurisive:
+                        self.recursive_parent_add_family(n, superFamily)
                     # self.nodes[n].families.append(family)
                     break  # continue down the tree
                 j = j + 1
@@ -234,12 +237,12 @@ strie.add("ethenol", 'a4')
 strie.add("bananana", 'a5')
 strie.add("nedved", 'a6')
 strie.visualize()
-# # strie.add("ethanol")
-# # strie.add("ethanols")
-#
-vertices, edges, iff = strie.proper_to_graphframe(0)
-print(vertices)
-print(edges)
+# # # strie.add("ethanol")
+# # # strie.add("ethanols")
+# #
+# vertices, edges, iff = strie.proper_to_graphframe(0)
+# print(vertices)
+# print(edges)
 
 #
 # strie = SuffixTree("banana")
