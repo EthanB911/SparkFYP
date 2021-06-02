@@ -1,0 +1,4 @@
+bio==0.4.1
+biopython==1.78
+pyspark==3.1.1
+graphframes==0.6

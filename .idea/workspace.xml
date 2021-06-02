@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
@@ -383,7 +384,21 @@
       <option name="project" value="LOCAL" />
       <updated>1622635190861</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Ready to run on vm">
+      <created>1622640133861</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1622640133861</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Ready to run on vm">
+      <created>1622640183904</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1622640183904</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -399,7 +414,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added subst matrix and add all substitutions of the consensus to trie." />
     <MESSAGE value="Experimenting with searching and filtering dataframes." />
     <MESSAGE value="Commenting process for searching" />
     <MESSAGE value="added suffix trie" />
@@ -424,7 +438,8 @@
     <MESSAGE value="Small change in trie creation method" />
     <MESSAGE value="Storing all super families" />
     <MESSAGE value="Fixed bug , superfamilies are now being sent to parents to ensure each parent of the  node that has a new superfamily, will be addeed to the latter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed bug , superfamilies are now being sent to parents to ensure each parent of the  node that has a new superfamily, will be addeed to the latter" />
+    <MESSAGE value="Ready to run on vm" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ready to run on vm" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -451,7 +466,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
-          <line>120</line>
+          <line>122</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

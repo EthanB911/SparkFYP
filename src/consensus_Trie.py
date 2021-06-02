@@ -111,7 +111,6 @@ def load_graph():
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
 
-#
 
 #load all super families
 s = time.time()
@@ -119,7 +118,7 @@ trie, diction = all_fasta_alignments_to_trie()
 print(diction)
 print("--- %s seconds ---" % (time.time() - s))
 # id = 0
-vertices,edges, id = trie.proper_to_graphframe(id)
+vertices,edges, id = trie.proper_to_graphframe(0)
 print("--- %s seconds ---" % (time.time() - s))
 g = verts_edges_to_graphframe(vertices, edges)
 print("--- %s seconds ---" % (time.time() - s))

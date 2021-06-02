@@ -67,8 +67,8 @@ class SuffixTree:
                         print(sub2[j:])
                     self.nodes[n].ch[x2] = n2
                     # self.nodes[n].superFamily = super_families
-                    if apply_recurisive:
-                        self.recursive_parent_add_family(n, superFamily)
+                    # if apply_recurisive:
+                    #     self.recursive_parent_add_family(n, superFamily)
                     # self.nodes[n].families.append(family)
                     break  # continue down the tree
                 j = j + 1
@@ -182,7 +182,7 @@ class SuffixTree:
 
                 self.count += 1
                 return
-            print("+-", self.nodes[n].sub, id)
+            print("+-", self.nodes[n].sub, self.nodes[n].superFamily)
             if self.nodes[n].sub != '':
                 if(len(self.nodes[n].sub) > 1):
                     id = recursive_word_vertice_add(generatedId,self.nodes[n].sub, self.nodes[n].superFamily)
