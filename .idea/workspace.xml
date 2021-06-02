@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +34,7 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.consensus_Trie">
+  <component name="RunManager" selected="Python.suffix_trie">
     <configuration name="blums62" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spark" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -360,7 +361,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622371714634</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Small change in trie creation method">
+      <created>1622377523874</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1622377523874</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -400,7 +408,8 @@
     <MESSAGE value="transferred new search here from other repository" />
     <MESSAGE value="Changed algorithm for creation of graphframe..&#10;Now it can be run on all superfamilies." />
     <MESSAGE value="MEthod for  generating 1 superfamily only" />
-    <option name="LAST_COMMIT_MESSAGE" value="MEthod for  generating 1 superfamily only" />
+    <MESSAGE value="Small change in trie creation method" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small change in trie creation method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -422,13 +431,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
-          <line>132</line>
+          <line>141</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
           <line>136</line>
           <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
+          <line>77</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
+          <line>220</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/Tries/suffix_trie.py</url>
+          <line>71</line>
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

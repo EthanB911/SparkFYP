@@ -2,7 +2,7 @@ class Node:
     def __init__(self, sub="", children=None, superFamily=None, families=None):
         self.sub = sub
         self.ch = children or []
-        self.superFamily = superFamily
+        self.superFamily = superFamily or []
         self.families = families or []
 
 
@@ -28,9 +28,11 @@ class SuffixTree:
                 if x2 == len(children):
                     # no matching child, remainder of suf becomes new node
                     n2 = len(self.nodes)
-                    self.nodes.append(Node(suf[i:], [], superFamily, [funFamily]))
+                    self.nodes.append(Node(suf[i:], [], [superFamily], [funFamily]))
                     if ('$' in suf[i:]):
                         print(suf[i:])
+                    if superFamily not in self.nodes[n].superFamily:
+                        self.nodes[n].superFamily.append(superFamily)
                     self.nodes[n].ch.append(n2)
                     return
                 n2 = children[x2]
@@ -48,17 +50,24 @@ class SuffixTree:
                     n3 = n2
 
                     families = self.nodes[n2].families.copy()
+                    super_families = self.nodes[n2].superFamily.copy()
                     # new node for the part in common
                     n2 = len(self.nodes)
 
                     if funFamily not in families:
                         families.append(funFamily)
-                    self.nodes.append(Node(sub2[:j], [n3], superFamily, families))
+
+                    if superFamily not in super_families:
+                        super_families.append(superFamily)
+
+                    self.nodes.append(Node(sub2[:j], [n3], super_families, families))
                     self.nodes[n3].sub = sub2[j:]  # old node loses the part in common
+
                     # self.nodes[n3].families = [family]
                     if('$' in sub2[j:]):
                         print(sub2[j:])
                     self.nodes[n].ch[x2] = n2
+                    self.nodes[n].superFamily = self.nodes[n2].superFamily
                     # self.nodes[n].families.append(family)
                     break  # continue down the tree
                 j = j + 1
@@ -75,10 +84,10 @@ class SuffixTree:
         def f(n, pre):
             children = self.nodes[n].ch
             if len(children) == 0:
-                print("-- ", self.nodes[n].sub + " " + self.nodes[n].superFamily)
+                print("-- ", self.nodes[n].sub + " " +  str(self.nodes[n].superFamily))
                 self.count += 1
                 return
-            print("+-", self.nodes[n].sub)
+            print("+-", self.nodes[n].sub + " " +  str(self.nodes[n].superFamily))
 
             for c in children[:-1]:
                 print(pre, "+- ", end='')
@@ -207,10 +216,10 @@ class SuffixTree:
 
 #
 strie = SuffixTree("banana")
+strie.add("banana", 'a3', '3')
 strie.add("ethan", 'a1', '1')
 strie.add("ethanol", 'a2', '2')
-strie.add("ethanal", 'a2', '2')
-strie.add("banana", 'a3', '3')
+strie.add("ethenol", 'a4', '2')
 strie.visualize()
 # # strie.add("ethanol")
 # # strie.add("ethanols")
