@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc7d0c85-d371-41f6-bcfe-78b54d8beff6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Tries/suffix_trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tries/suffix_trie.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/consensus_Trie.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/consensus_Trie.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -398,7 +397,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622640183904</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Added requirements">
+      <created>1622641806755</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1622641806755</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -414,7 +420,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Experimenting with searching and filtering dataframes." />
     <MESSAGE value="Commenting process for searching" />
     <MESSAGE value="added suffix trie" />
     <MESSAGE value="trie to graphframes method completed" />
@@ -439,7 +444,8 @@
     <MESSAGE value="Storing all super families" />
     <MESSAGE value="Fixed bug , superfamilies are now being sent to parents to ensure each parent of the  node that has a new superfamily, will be addeed to the latter" />
     <MESSAGE value="Ready to run on vm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ready to run on vm" />
+    <MESSAGE value="Added requirements" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added requirements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -466,7 +472,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/consensus_Trie.py</url>
-          <line>122</line>
+          <line>128</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">

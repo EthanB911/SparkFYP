@@ -91,48 +91,57 @@ def verts_edges_to_graphframe(v, e):
     spark = get_spark_session()
     sqlContext = SQLContext(spark.sparkContext)
     print('started')
-    verts = sqlContext.createDataFrame(v, ["id", "name"])
-    print('vertices done')
-    edgs = sqlContext.createDataFrame(e, ["src", "dst", "family"])
-    print("--- %s seconds ---" % (time.time() - start_time))
-    return GraphFrame(verts, edgs)
 
-def save_graphframe(graph):
-    graph.vertices.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
-    graph.edges.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
+    # verts = sqlContext.createDataFrame(v, ["id", "name"])
+    rdd_verts = spark.sparkContext.parallelize(v)
+    verts = sqlContext.createDataFrame(rdd_verts, ["id", "name"])
+    print('vertices done')
+    # edgs = sqlContext.createDataFrame(e, ["src", "dst", "family"])
+    rdd_edgs = spark.sparkContext.parallelize(e)
+    edgs = sqlContext.createDataFrame(rdd_edgs, ["src", "dst", "family"])
+    print("--- %s seconds ---" % (time.time() - start_time))
+    return verts, edgs
+    # return GraphFrame(verts, edgs)
+
+def save_graphframe(vertices ,edges, dictionary):
+    vertices.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
+    edges.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
     print('saved')
 
 def load_graph():
     start_time = time.time()
     spark = get_spark_session()
     sqlContext = SQLContext(spark.sparkContext)
-    verts = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
-    edgs = sqlContext.read.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
+    verts = sqlContext.read.parquet("/Users/ethan/Downloads/graphfram-imported/vertices")
+    edgs = sqlContext.read.parquet("/Users/ethan/Downloads/graphfram-imported/edges")
     print("--- %s seconds ---" % (time.time() - start_time))
     return GraphFrame(verts, edgs)
 
 
 #load all super families
-s = time.time()
-trie, diction = all_fasta_alignments_to_trie()
-print(diction)
-print("--- %s seconds ---" % (time.time() - s))
-# id = 0
-vertices,edges, id = trie.proper_to_graphframe(0)
-print("--- %s seconds ---" % (time.time() - s))
-g = verts_edges_to_graphframe(vertices, edges)
-print("--- %s seconds ---" % (time.time() - s))
+# s = time.time()
+# trie, diction = all_fasta_alignments_to_trie()
+# print(diction)
+# print("--- %s seconds ---" % (time.time() - s))
+# # id = 0
+# vertices,edges, id = trie.proper_to_graphframe(0)
+# print("--- %s seconds ---" % (time.time() - s))
+# g = verts_edges_to_graphframe(vertices, edges)
+# print("--- %s seconds ---" % (time.time() - s))
 # save_graphframe(g)
 
 #load 1 superfamily
-# trie = fasta_to_trie()
+# trie, diti = fasta_to_trie()
 # vertices, edges, id = trie.proper_to_graphframe(0)
-# g = verts_edges_to_graphframe(vertices, edges)
-# save_graphframe(g)
+# # g = verts_edges_to_graphframe(vertices, edges)
+# ve, ed = verts_edges_to_graphframe(vertices, edges)
+# # save_graphframe(g)
+# ve.write.parquet("/Users/ethan/Downloads/1.10.1870.10/trial/vertices")
+# ed.write.parquet("/Users/ethan/Downloads/1.10.1870.10/trial/edges")
 
-
-# g= load_graph()
-# g.cache()
+g= load_graph()
+g.cache()
+g.edges.show()
 
 
 # trie.add("xadina", "e1")
