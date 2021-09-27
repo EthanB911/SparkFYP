@@ -86,7 +86,8 @@ def all_fasta_alignments_to_trie():
     return trie, fasta_dictionary
 
 
-
+//----------------------------------------------------------------------------------------------------
+//converting dataframe to rdd
 def verts_edges_to_graphframe(v, e, d):
     start_time = time.time()
     spark = get_spark_session()
@@ -105,6 +106,7 @@ def verts_edges_to_graphframe(v, e, d):
     return verts, edgs, diti
     # return GraphFrame(verts, edgs)
 
+//save to directory
 def save_graphframe(vertices ,edges, dictionary):
     vertices.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/vertices")
     edges.write.parquet("/Users/ethan/Downloads/1.10.1870.10/graphframe/edges")
@@ -112,6 +114,7 @@ def save_graphframe(vertices ,edges, dictionary):
 
     print('saved')
 
+//load graphframe
 def load_graph():
     start_time = time.time()
     spark = get_spark_session()
